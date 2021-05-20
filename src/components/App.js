@@ -3,6 +3,7 @@ import firebase from "../config/firebase";
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import Trivia from './Trivia';
+import Footer from './Footer';
 
 function App() {
 
@@ -10,8 +11,8 @@ function App() {
   //
   
   const [quizAmount, setQuizAmount] = useState(10);
-  const [quizCategory, setQuizCategory] = useState(9); // 9(general knowledge) ~ 32(entertainment)
-  const [quizDifficulty, setQuizDifficulty] = useState('easy');
+  const [quizCategory, setQuizCategory] = useState(14); // 9(general knowledge) ~ 32(entertainment)
+  const [quizDifficulty, setQuizDifficulty] = useState('hard');
   const [quizType, setQuizType] = useState('multiple') //multiple or boolean string
 
   const [quizOptions, setQuizOptions] = useState ([]);
@@ -19,7 +20,7 @@ function App() {
 
 
   const dbRef = firebase.database().ref();
-
+// test change
 
   useEffect(() => {
 
@@ -99,6 +100,7 @@ function App() {
 
 
       <Trivia/>
+      <Footer/>
 
 
 
