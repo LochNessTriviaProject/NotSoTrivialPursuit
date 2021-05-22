@@ -15,9 +15,8 @@ function App() {
   const [quizDifficulty, setQuizDifficulty] = useState('hard');
   const [quizType, setQuizType] = useState('multiple') //multiple or boolean string
 
-  const [quizOptions, setQuizOptions] = useState ([]);
-
-
+  // const [quizOptions, setQuizOptions] = useState ([]);
+  const [quizArray, setQuizArray] = useState([]);
 
   const dbRef = firebase.database().ref();
 // test change
@@ -34,7 +33,7 @@ function App() {
         difficulty: quizDifficulty,
         type: quizType,
       }
-    }).then(function (res) {
+    }).then((res) =>{
       
       console.log(res);
 
@@ -43,18 +42,21 @@ function App() {
 
       console.log(quizObjArray);
 
+      const newQuizArray = res.data.results.map((quiz, index)=>{
+        return {
+          key: `quiz-${index}`,
+          question: res.data.results[index].question,
+          correctAnswer: res.data.results[index].correct_answer,
+          wrongAnswer1: res.data.results[index].incorrect_answers[0],
+          wrongAnswer2: res.data.results[index].incorrect_answers[1],
+          wrongAnswer3: res.data.results[index].incorrect_answers[2],
+        };
+      })
 
-      // const quizObj = {
-      //   question: res.data.results[0].question,
-      //   correctAnswer: res.data.results[0].correct_answer,
-      //   wrongAnswer1: res.data.results[0].incorrect_answers[0],
-      //   wrongAnswer2: res.data.results[0].incorrect_answers[1],
-      //   wrongAnswer3: res.data.results[0].incorrect_answers[2],
-      // };
+      console.log(newQuizArray);
 
-      // for (let i=0 ; i>res.data.results.length;i++){
-        
-      //   quizObjArray.push(quizObj)
+      setQuizArray(newQuizArray);
+
 
 
     });
@@ -99,7 +101,10 @@ function App() {
 
 
 
-      <Trivia/>
+      <Trivia quizArray ={quizArray}/>
+
+
+
       <Footer/>
 
 
