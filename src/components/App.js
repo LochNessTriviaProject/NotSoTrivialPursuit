@@ -16,10 +16,17 @@ function App() {
   const [quizType, setQuizType] = useState('multiple') //multiple or boolean string
 
   // const [quizOptions, setQuizOptions] = useState ([]);
-  const [quizArray, setQuizArray] = useState([]);
+  const [quizArray, setQuizArray] = useState([1]);
+  const [quizCount, setQuizCount] = useState(0);
+  const [quizScore, setQuizScore] = useState(0);
 
   const dbRef = firebase.database().ref();
 // test change
+
+
+
+
+
 
   useEffect(() => {
 
@@ -34,15 +41,15 @@ function App() {
         type: quizType,
       }
     }).then((res) =>{
-      
       console.log(res);
+      // quotes and '(apostrophe) are turning into weird unicodes (&#039;) from API call right away, there should be way to convert/fix this?
+      console.log(res.data.results);
 
-      console.log(res.data.results.length)
       const quizObjArray = res.data.results;
 
       console.log(quizObjArray);
 
-      const newQuizArray = res.data.results.map((quiz, index)=>{
+      const newQuizArray = res.data.results.map((quiz, index) => {
         return {
           key: `quiz-${index}`,
           question: res.data.results[index].question,
@@ -51,21 +58,12 @@ function App() {
           wrongAnswer2: res.data.results[index].incorrect_answers[1],
           wrongAnswer3: res.data.results[index].incorrect_answers[2],
         };
-      })
+      });
 
       console.log(newQuizArray);
 
       setQuizArray(newQuizArray);
-
-
-
     });
-
-
-
-
-
-
 
 
 
@@ -89,29 +87,35 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+    const handleAnswerChoice = (event) => {
+      console.log(event.target);
 
+      if(event.target.className === "correct"){
+        //SHOW CORRECT ANIMATION HERE?
+        setQuizScore(quizScore + 1);
+        setQuizCount(quizCount + 1);
+      }
+      
+      else{
+        //SHOW INCORRECT ANIMATION HERE?
+        setQuizCount(quizCount + 1);
+      }
+    };
 
 
 
   
   return (
     <>
+      <Trivia
+        quizArray={quizArray}
+        quizCount={quizCount}
+        handleAnswerChoice={handleAnswerChoice}
+        quizScore={quizScore}
+      />
 
-
-
-
-
-      <Trivia quizArray ={quizArray}/>
-
-
-
-      <Footer/>
-
-
-
-
+      <Footer />
     </>
-
   );
 }
 
