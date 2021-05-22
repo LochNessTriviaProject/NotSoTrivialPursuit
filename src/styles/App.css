@@ -5,3 +5,13 @@ html {
   background-color:black;
   color:white;
 }
+
+
+.answersContainer {
+  display:flex;
+}
+
+.answersContainer li {
+  margin: 2rem;
+  list-style:none;
+}

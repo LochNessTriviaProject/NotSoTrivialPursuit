@@ -68,7 +68,7 @@ function App() {
 
 
 
-
+    // FIRE BASE IS HARDDDD
 
     dbRef.on("value", (res) => {
       const newDataArray = [];
@@ -107,6 +107,8 @@ function App() {
   
   return (
     <>
+
+
       <Trivia
         quizArray={quizArray}
         quizCount={quizCount}
@@ -115,6 +117,8 @@ function App() {
       />
 
       <Footer />
+
+
     </>
   );
 }
