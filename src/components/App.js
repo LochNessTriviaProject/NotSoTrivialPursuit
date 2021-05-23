@@ -5,6 +5,7 @@ import axios from 'axios';
 import Trivia from './Trivia';
 import Footer from './Footer';
 import Form from './Form';
+import SavedGames from './SavedGames';
 
 function App() {
 
@@ -25,14 +26,10 @@ function App() {
   const [quizArray, setQuizArray] = useState([1,2,3]);
   const [quizCount, setQuizCount] = useState(0);
   const [quizScore, setQuizScore] = useState(0);
+  const [userData, setUserData] = useState([]);
 
   const dbRef = firebase.database().ref();
 // test change
-
-
-
-
-
 
   useEffect(() => {
 
@@ -76,6 +73,32 @@ function App() {
         console.log(newQuizArray);
         
         setQuizArray(newQuizArray);
+
+            dbRef.on("value", (res) => {
+              const newDataArray = [];
+              const data = res.val();
+
+              console.log("data", data);
+
+
+
+              for (let key in data) {
+                let searchObj = {
+                  key: key,
+                  name: data[key][0].name,
+                  progress: data[key][0].progress,
+                };
+                console.log("key", key);
+                console.log(searchObj);
+                newDataArray.unshift(searchObj);
+              }
+              
+              setUserData(newDataArray);
+              console.log(newDataArray);
+              console.log(userData);
+
+            });
+
       }
       else {
         alert('no dice pal');
@@ -87,25 +110,7 @@ function App() {
 
     // FIRE BASE IS HARDDDD
 
-    dbRef.on("value", (res) => {
-      const newDataArray = [];
-      const data = res.val();
-      
-      console.log('data', data);
 
-
-      for (let key in data) {
-        let searchObj = {
-          key: key,
-          name: userName
-        };
-        console.log('key', key);
-        console.log(searchObj);
-        newDataArray.unshift(searchObj);
-      }
-
-
-    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [quizCategory, userName]);
 
@@ -160,6 +165,8 @@ function App() {
       <Form 
         submitQuizAmount={submitQuizAmount} submitQuizCategory={submitQuizCategory} submitQuizDifficulty={submitQuizDifficulty} handleUserName={handleUserName} userName={userName} dbRef={dbRef} quizArray={quizArray}
       />
+
+      <SavedGames userData = {userData}/>
 
 
       <Footer />

@@ -5,3 +5,30 @@
 // Clicking on a saved game will pop up a modal with the current question displaying
 
 // In progress games will show at at the top, with some indicator that they are still ongoing, completed games will show up at the bottom with the score displayed. 
+
+
+
+const SavedGames = ({userData})=> {
+
+    return (
+        <>
+            <ul>
+                {
+                    userData.map((user)=>{
+
+                        return (
+                            <>
+                            <li>Name: {user.name} Progress: {user.progress}/10 quizzes</li>
+                            <button>Resume</button>
+                            </>
+                        )
+
+                    })
+                }
+
+            </ul>
+        </>
+    )
+}
+
+export default SavedGames;

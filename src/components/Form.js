@@ -39,13 +39,11 @@ const Form = (props) => {
         dbRef.push(quizArray);
         console.log(dbRef);
         console.log('we have clicked');
-
-
     }
 
     return (
         <>
-            <form action="submit" onSubmit={function(event){ handleSubmit(); handleUserName()}}>
+            <form action="submit" onSubmit={handleSubmit}>
             {/* Drop down menu for # of questions, category, and difficulty */}
                 <fieldset>
                     <label htmlFor="quizCategory">Category</label>
