@@ -22,7 +22,7 @@ function App() {
 
 
   // const [quizOptions, setQuizOptions] = useState ([]);
-  const [quizArray, setQuizArray] = useState([1]);
+  const [quizArray, setQuizArray] = useState([1,2,3]);
   const [quizCount, setQuizCount] = useState(0);
   const [quizScore, setQuizScore] = useState(0);
 
@@ -144,10 +144,6 @@ function App() {
       <Form 
         submitQuizAmount={submitQuizAmount} submitQuizCategory={submitQuizCategory} submitQuizDifficulty={submitQuizDifficulty} handleUserName={handleUserName} userName={userName}
       />
-
-      <Trivia/>
-      <Footer/>
-
 
 
       <Footer />
