@@ -49,27 +49,37 @@ function App() {
 
     }).then((res) =>{
       console.log(res);
-      // quotes and '(apostrophe) are turning into weird unicodes (&#039;) from API call right away, there should be way to convert/fix this?
-      console.log(res.data.results);
+      console.log(res.data.response_code);
+      
+      if (res.data.response_code === 0) {
 
-      const quizObjArray = res.data.results;
-
-      console.log(quizObjArray);
-
-      const newQuizArray = res.data.results.map((quiz, index) => {
-        return {
-          key: `quiz-${index}`,
-          question: res.data.results[index].question,
-          correctAnswer: res.data.results[index].correct_answer,
-          wrongAnswer1: res.data.results[index].incorrect_answers[0],
-          wrongAnswer2: res.data.results[index].incorrect_answers[1],
-          wrongAnswer3: res.data.results[index].incorrect_answers[2],
-        };
-      });
-
-      console.log(newQuizArray);
-
-      setQuizArray(newQuizArray);
+        // quotes and '(apostrophe) are turning into weird unicodes (&#039;) from API call right away, there should be way to convert/fix this?
+        console.log(res.data.results);
+        
+        const quizObjArray = res.data.results;
+        
+        console.log(quizObjArray);
+        
+        const newQuizArray = res.data.results.map((quiz, index) => {
+          return {
+            name: userName,
+            progress: quizCount,
+            key: `quiz-${index}`,
+            question: res.data.results[index].question,
+            correctAnswer: res.data.results[index].correct_answer,
+            wrongAnswer1: res.data.results[index].incorrect_answers[0],
+            wrongAnswer2: res.data.results[index].incorrect_answers[1],
+            wrongAnswer3: res.data.results[index].incorrect_answers[2],
+          };
+        });
+        
+        console.log(newQuizArray);
+        
+        setQuizArray(newQuizArray);
+      }
+      else {
+        alert('no dice pal');
+      }
     });
 
 
@@ -80,19 +90,24 @@ function App() {
     dbRef.on("value", (res) => {
       const newDataArray = [];
       const data = res.val();
+      
+      console.log('data', data);
 
 
       for (let key in data) {
         let searchObj = {
           key: key,
+          name: userName
         };
+        console.log('key', key);
+        console.log(searchObj);
         newDataArray.unshift(searchObj);
       }
 
 
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [quizCategory]);
+  }, [quizCategory, userName]);
 
   const submitQuizAmount = (amount) => {
     setQuizAmount(amount);
@@ -108,6 +123,7 @@ function App() {
 
   const handleUserName = (event) => {
     // console.log(event.target.value);
+    console.log(event);
     let userNameValue = event.target.value;
     setUserName(userNameValue);
   }
@@ -118,6 +134,7 @@ function App() {
         //SHOW CORRECT ANIMATION HERE?
         setQuizScore(quizScore + 1);
         setQuizCount(quizCount + 1);
+
       }
       
       else{
@@ -141,7 +158,7 @@ function App() {
       />
 
       <Form 
-        submitQuizAmount={submitQuizAmount} submitQuizCategory={submitQuizCategory} submitQuizDifficulty={submitQuizDifficulty} handleUserName={handleUserName} userName={userName}
+        submitQuizAmount={submitQuizAmount} submitQuizCategory={submitQuizCategory} submitQuizDifficulty={submitQuizDifficulty} handleUserName={handleUserName} userName={userName} dbRef={dbRef} quizArray={quizArray}
       />
 
 
