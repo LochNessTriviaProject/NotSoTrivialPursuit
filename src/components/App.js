@@ -11,7 +11,7 @@ function App() {
 
   //PSEUDO CODE
   //
-  
+  const [displayTrivia, setDisplayTrivia] = useState(false);
   const [quizAmount, setQuizAmount] = useState(10);
   const [quizCategory, setQuizCategory] = useState(14); // 9(general knowledge) ~ 32(entertainment)
   const [quizDifficulty, setQuizDifficulty] = useState('hard');
@@ -20,6 +20,7 @@ function App() {
   const [quizOptions, setQuizOptions] = useState ([]);
 
   const [userName, setUserName] = useState("");
+  const [userInfo, setUserInfo] = useState('');
 
 
   // const [quizOptions, setQuizOptions] = useState ([]);
@@ -79,9 +80,6 @@ function App() {
               const data = res.val();
 
               console.log("data", data);
-
-
-
               for (let key in data) {
                 let searchObj = {
                   key: key,
@@ -126,6 +124,38 @@ function App() {
     setQuizDifficulty(difficulty);
   }
 
+  const handleCategory = (event) => {
+    // console.log(event.target.value);
+    let categoryValue = parseInt(event.target.value);
+    setQuizCategory(categoryValue);
+  };
+
+  const handleAmount = (event) => {
+    // console.log(event.target.value);
+    let amountValue = parseInt(event.target.value);
+    setQuizAmount(amountValue);
+  };
+
+  const handleDifficulty = (event) => {
+    // console.log(event.target.value);
+    let difficultyValue = event.target.value;
+    setQuizDifficulty(difficultyValue);
+  };
+
+      const handleSubmit = (event) => {
+        event.preventDefault();
+        // displayTrivia
+        dbRef.push(quizArray);
+        submitQuizCategory(quizCategory);
+        submitQuizAmount(quizAmount);
+        submitQuizDifficulty(quizDifficulty);
+        console.log("dbReftimes", dbRef);
+        // console.log(quizArray);
+        console.log(dbRef);
+        console.log("we have clicked");
+        setDisplayTrivia(!displayTrivia);
+      };
+
   const handleUserName = (event) => {
     // console.log(event.target.value);
     console.log(event);
@@ -148,30 +178,89 @@ function App() {
       }
     };
 
+    const setDisplay = () => {
+      setDisplayTrivia(false);
+    }
+
+    const resumeGame = (event) => {
+      console.log(event.target.className);
+      const savedUserName = event.target.className;
 
 
-  
+      dbRef.on("value", (res) => {
+              const newDataArray = [];
+              const data = res.val();
+
+              console.log("data", data);
+              for (let key in data) {
+                let searchObj = {
+                  key: key,
+                  name: data[key][0].name,
+                  progress: data[key][0].progress,
+                  question: data[key][0].question,
+                  correctAnswer: data[key][0].correctAnswer,
+                  wrongAnswer1: data[key][0].wrongAnswer1,
+                  wrongAnswer2: data[key][0].wrongAnswer2,
+                  wrongAnswer3: data[key][0].wrongAnswer3,
+                };
+                console.log("key", key);
+                console.log(searchObj);
+                newDataArray.unshift(searchObj);
+              }
+              console.log(newDataArray);
+
+              const updatedArray = newDataArray.filter((user)=>{
+
+                  return savedUserName === user.name
+                
+
+              })
+              setUserInfo(updatedArray[0]);
+              
+    })
+
+
+
+
+
+    }
   return (
     <>
+      <h1>TRIVIAAAAAAAA</h1>
+      {displayTrivia ? (
+        <Trivia
+          quizArray={quizArray}
+          quizCount={quizCount}
+          handleAnswerChoice={handleAnswerChoice}
+          quizScore={quizScore}
+          setDisplay={setDisplay}
+          //if else statement to show saved games instead of fresh api called games!
+          userInfo={userInfo}
+        />
+      ) : (
+        <div></div>
+      )}
 
-
-      <Trivia
+      <Form
+        submitQuizAmount={submitQuizAmount}
+        submitQuizCategory={submitQuizCategory}
+        submitQuizDifficulty={submitQuizDifficulty}
+        handleUserName={handleUserName}
+        handleCategory={handleCategory}
+        handleAmount={handleAmount}
+        handleDifficulty={handleDifficulty}
+        handleSubmit={handleSubmit}
+        quizAmount={quizAmount}
+        quizCategory={quizCategory}
+        quizDifficulty={quizDifficulty}
+        userName={userName}
+        dbRef={dbRef}
         quizArray={quizArray}
-        quizCount={quizCount}
-        handleAnswerChoice={handleAnswerChoice}
-        quizScore={quizScore}
       />
 
-      <Form 
-        submitQuizAmount={submitQuizAmount} submitQuizCategory={submitQuizCategory} submitQuizDifficulty={submitQuizDifficulty} handleUserName={handleUserName} userName={userName} dbRef={dbRef} quizArray={quizArray}
-      />
-
-      <SavedGames userData = {userData}/>
-
+      <SavedGames userData={userData} resumeGame={resumeGame} />
 
       <Footer />
-
-
     </>
   );
 }

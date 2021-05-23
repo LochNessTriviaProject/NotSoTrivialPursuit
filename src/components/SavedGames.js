@@ -8,7 +8,7 @@
 
 
 
-const SavedGames = ({userData})=> {
+const SavedGames = ({userData, resumeGame})=> {
 
     return (
         <>
@@ -19,7 +19,7 @@ const SavedGames = ({userData})=> {
                         return (
                             <>
                             <li>Name: {user.name} Progress: {user.progress}/10 quizzes</li>
-                            <button>Resume</button>
+                            <button onClick={resumeGame} className={user.name}>Resume</button>
                             </>
                         )
 
