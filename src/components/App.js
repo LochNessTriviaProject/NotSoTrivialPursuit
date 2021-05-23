@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import axios from 'axios';
 import Trivia from './Trivia';
 import Footer from './Footer';
+import Form from './Form';
 
 function App() {
 
@@ -16,6 +17,8 @@ function App() {
   const [quizType, setQuizType] = useState('multiple') //multiple or boolean string
 
   const [quizOptions, setQuizOptions] = useState ([]);
+
+  const [userName, setUserName] = useState("");
 
 
 
@@ -36,9 +39,9 @@ function App() {
       }
     }).then(function (res) {
       
-      console.log(res);
+      // console.log(res);
 
-      console.log(res.data.results.length)
+      // console.log(res.data.results.length)
       const quizObjArray = res.data.results;
 
       console.log(quizObjArray);
@@ -56,7 +59,7 @@ function App() {
         
       //   quizObjArray.push(quizObj)
 
-
+    // Include a dependency array so that API call is made every time the states/params change?
     });
 
 
@@ -87,7 +90,23 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const submitQuizAmount = (amount) => {
+    setQuizAmount(amount);
+  }
 
+  const submitQuizCategory = (category) => {
+    setQuizCategory(category);
+  }
+
+  const submitQuizDifficulty = (difficulty) => {
+    setQuizDifficulty(difficulty);
+  }
+
+  const handleUserName = (event) => {
+    // console.log(event.target.value);
+    let userNameValue = event.target.value;
+    setUserName(userNameValue);
+  }
 
 
 
@@ -97,7 +116,9 @@ function App() {
 
 
 
-
+      <Form 
+        submitQuizAmount={submitQuizAmount} submitQuizCategory={submitQuizCategory} submitQuizDifficulty={submitQuizDifficulty} handleUserName={handleUserName} userName={userName}
+      />
 
       <Trivia/>
       <Footer/>
