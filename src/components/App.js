@@ -67,7 +67,6 @@ function App() {
         };
       });
 
-
       console.log(newQuizArray);
 
       setQuizArray(newQuizArray);
@@ -93,7 +92,7 @@ function App() {
 
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [quizCategory]);
 
   const submitQuizAmount = (amount) => {
     setQuizAmount(amount);
