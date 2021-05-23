@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 const Form = (props) => {
     // Destructure props (functions which change state for API call)
-    const { submitQuizCategory, submitQuizAmount, submitQuizDifficulty, handleUserName, userName } = props;
+    const { submitQuizCategory, submitQuizAmount, submitQuizDifficulty, handleUserName, userName, dbRef, quizArray } = props;
 
     // Initialize state to hold user's inputs
     const [ quizCategory, setCategory ] = useState("");
@@ -34,11 +34,18 @@ const Form = (props) => {
         submitQuizCategory(quizCategory);
         submitQuizAmount(quizAmount);
         submitQuizDifficulty(quizDifficulty);
+        console.log('dbReftimes', dbRef);
+        // console.log(quizArray);
+        dbRef.push(quizArray);
+        console.log(dbRef);
+        console.log('we have clicked');
+
+
     }
 
     return (
         <>
-            <form action="submit" onSubmit={handleSubmit}>
+            <form action="submit" onSubmit={function(event){ handleSubmit(); handleUserName()}}>
             {/* Drop down menu for # of questions, category, and difficulty */}
                 <fieldset>
                     <label htmlFor="quizCategory">Category</label>
