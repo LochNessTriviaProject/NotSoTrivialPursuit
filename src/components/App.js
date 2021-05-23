@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import axios from 'axios';
 import Trivia from './Trivia';
 import Footer from './Footer';
+import Form from './Form';
 
 function App() {
 
@@ -14,6 +15,11 @@ function App() {
   const [quizCategory, setQuizCategory] = useState(14); // 9(general knowledge) ~ 32(entertainment)
   const [quizDifficulty, setQuizDifficulty] = useState('hard');
   const [quizType, setQuizType] = useState('multiple') //multiple or boolean string
+
+  const [quizOptions, setQuizOptions] = useState ([]);
+
+  const [userName, setUserName] = useState("");
+
 
   // const [quizOptions, setQuizOptions] = useState ([]);
   const [quizArray, setQuizArray] = useState([1]);
@@ -40,6 +46,7 @@ function App() {
         difficulty: quizDifficulty,
         type: quizType,
       }
+
     }).then((res) =>{
       console.log(res);
       // quotes and '(apostrophe) are turning into weird unicodes (&#039;) from API call right away, there should be way to convert/fix this?
@@ -59,6 +66,7 @@ function App() {
           wrongAnswer3: res.data.results[index].incorrect_answers[2],
         };
       });
+
 
       console.log(newQuizArray);
 
@@ -87,6 +95,23 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const submitQuizAmount = (amount) => {
+    setQuizAmount(amount);
+  }
+
+  const submitQuizCategory = (category) => {
+    setQuizCategory(category);
+  }
+
+  const submitQuizDifficulty = (difficulty) => {
+    setQuizDifficulty(difficulty);
+  }
+
+  const handleUserName = (event) => {
+    // console.log(event.target.value);
+    let userNameValue = event.target.value;
+    setUserName(userNameValue);
+  }
     const handleAnswerChoice = (event) => {
       console.log(event.target);
 
@@ -115,6 +140,15 @@ function App() {
         handleAnswerChoice={handleAnswerChoice}
         quizScore={quizScore}
       />
+
+      <Form 
+        submitQuizAmount={submitQuizAmount} submitQuizCategory={submitQuizCategory} submitQuizDifficulty={submitQuizDifficulty} handleUserName={handleUserName} userName={userName}
+      />
+
+      <Trivia/>
+      <Footer/>
+
+
 
       <Footer />
 
