@@ -21,9 +21,18 @@ function App() {
   const [userName, setUserName] = useState("");
 
 
+  // const [quizOptions, setQuizOptions] = useState ([]);
+  const [quizArray, setQuizArray] = useState([1]);
+  const [quizCount, setQuizCount] = useState(0);
+  const [quizScore, setQuizScore] = useState(0);
 
   const dbRef = firebase.database().ref();
 // test change
+
+
+
+
+
 
   useEffect(() => {
 
@@ -37,41 +46,37 @@ function App() {
         difficulty: quizDifficulty,
         type: quizType,
       }
-    }).then(function (res) {
-      
-      // console.log(res);
 
-      // console.log(res.data.results.length)
+    }).then((res) =>{
+      console.log(res);
+      // quotes and '(apostrophe) are turning into weird unicodes (&#039;) from API call right away, there should be way to convert/fix this?
+      console.log(res.data.results);
+
       const quizObjArray = res.data.results;
 
       console.log(quizObjArray);
 
+      const newQuizArray = res.data.results.map((quiz, index) => {
+        return {
+          key: `quiz-${index}`,
+          question: res.data.results[index].question,
+          correctAnswer: res.data.results[index].correct_answer,
+          wrongAnswer1: res.data.results[index].incorrect_answers[0],
+          wrongAnswer2: res.data.results[index].incorrect_answers[1],
+          wrongAnswer3: res.data.results[index].incorrect_answers[2],
+        };
+      });
 
-      // const quizObj = {
-      //   question: res.data.results[0].question,
-      //   correctAnswer: res.data.results[0].correct_answer,
-      //   wrongAnswer1: res.data.results[0].incorrect_answers[0],
-      //   wrongAnswer2: res.data.results[0].incorrect_answers[1],
-      //   wrongAnswer3: res.data.results[0].incorrect_answers[2],
-      // };
 
-      // for (let i=0 ; i>res.data.results.length;i++){
-        
-      //   quizObjArray.push(quizObj)
+      console.log(newQuizArray);
 
-    // Include a dependency array so that API call is made every time the states/params change?
+      setQuizArray(newQuizArray);
     });
 
 
 
 
-
-
-
-
-
-
-
+    // FIRE BASE IS HARDDDD
 
     dbRef.on("value", (res) => {
       const newDataArray = [];
@@ -107,6 +112,20 @@ function App() {
     let userNameValue = event.target.value;
     setUserName(userNameValue);
   }
+    const handleAnswerChoice = (event) => {
+      console.log(event.target);
+
+      if(event.target.className === "correct"){
+        //SHOW CORRECT ANIMATION HERE?
+        setQuizScore(quizScore + 1);
+        setQuizCount(quizCount + 1);
+      }
+      
+      else{
+        //SHOW INCORRECT ANIMATION HERE?
+        setQuizCount(quizCount + 1);
+      }
+    };
 
 
 
@@ -115,6 +134,12 @@ function App() {
     <>
 
 
+      <Trivia
+        quizArray={quizArray}
+        quizCount={quizCount}
+        handleAnswerChoice={handleAnswerChoice}
+        quizScore={quizScore}
+      />
 
       <Form 
         submitQuizAmount={submitQuizAmount} submitQuizCategory={submitQuizCategory} submitQuizDifficulty={submitQuizDifficulty} handleUserName={handleUserName} userName={userName}
@@ -125,9 +150,10 @@ function App() {
 
 
 
+      <Footer />
+
 
     </>
-
   );
 }
 
