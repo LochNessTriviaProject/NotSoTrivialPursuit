@@ -18,8 +18,10 @@ function App() {
 
   const [quizOptions, setQuizOptions] = useState([]);
 
+  const [savedGame, setSavedGame] = useState(false);
+
   const [userName, setUserName] = useState("");
-  const [userInfo, setUserInfo] = useState("");
+  const [savedQuizArray, setSavedQuizArray] = useState([1,2,3]);
 
   // const [quizOptions, setQuizOptions] = useState ([]);
   const [quizArray, setQuizArray] = useState([1, 2, 3]);
@@ -151,41 +153,29 @@ function App() {
     setDisplayTrivia(false);
     // After hiding modal, update the progress (quizCount)!
     // dbRef.push()? dbRef.update()?
+    
   };
 
-  const resumeGame = (event) => {
-    console.log(event.target.className);
-    const savedUserName = event.target.className;
+  const resumeGame = () => {
 
     dbRef.on("value", (res) => {
       const newDataArray = [];
       const data = res.val();
 
       console.log("data", data);
-      for (let key in data) {
-        let searchObj = {
-          key: key,
-          name: data[key][0].name,
-          progress: data[key][0].progress,
-          question: data[key][0].question,
-          correctAnswer: data[key][0].correctAnswer,
-          wrongAnswer1: data[key][0].wrongAnswer1,
-          wrongAnswer2: data[key][0].wrongAnswer2,
-          wrongAnswer3: data[key][0].wrongAnswer3,
-        };
-        console.log("key", key);
-        console.log(searchObj);
-        newDataArray.unshift(searchObj);
-      }
-      console.log(newDataArray);
+      
+      let newSavedQuizArray = [];
 
-      const updatedArray = newDataArray.filter((user) => {
-        return savedUserName === user.name;
-      });
-      setUserInfo(updatedArray[0]);
+      for (let key in data) {
+        console.log(data[key]);
+        newSavedQuizArray = data[key];
+      }
+      console.log(newSavedQuizArray);
+      setSavedQuizArray(newSavedQuizArray);
+      setSavedGame(true);
     });
 
-    setDisplayTrivia(true);
+     setDisplayTrivia(true);
   };
   return (
     <>
@@ -197,33 +187,59 @@ function App() {
 
       <main>
         <div className="wrapper">
-        {displayTrivia ? (
-          <Trivia
-            quizArray={quizArray}
-            quizCount={quizCount}
-            handleAnswerChoice={handleAnswerChoice}
-            quizScore={quizScore}
-            endGame={endGame}
-            //if else statement to show saved games instead of fresh api called games!
-            userInfo={userInfo}
+
+          {
+            savedGame ? (
+            displayTrivia ? (
+            <Trivia
+              quizArray={savedQuizArray}
+              quizCount={quizCount}
+              handleAnswerChoice={handleAnswerChoice}
+              quizScore={quizScore}
+              endGame={endGame}
+              //if else statement to show saved games instead of fresh api called games!
+              savedQuizArray={savedQuizArray}
+              savedGame={savedGame}
+            />
+          ) : (
+            <div aria-hidden="true"></div>
+          )
+            ) : (
+
+              displayTrivia ? (
+            <Trivia
+              quizArray={quizArray}
+              quizCount={quizCount}
+              handleAnswerChoice={handleAnswerChoice}
+              quizScore={quizScore}
+              endGame={endGame}
+              //if else statement to show saved games instead of fresh api called games!
+              savedQuizArray={savedQuizArray}
+              savedGame={savedGame}
+            />
+          ) : (
+            <div aria-hidden="true"></div>
+          )
+
+            )
+
+
+          }
+
+
+
+          <Form
+            handleUserName={handleUserName}
+            handleCategory={handleCategory}
+            handleAmount={handleAmount}
+            handleDifficulty={handleDifficulty}
+            handleSubmit={handleSubmit}
+            userName={userName}
           />
-        ) : (
-          <div aria-hidden="true"></div>
-        )}
 
-      <Form
-        handleUserName={handleUserName}
-        handleCategory={handleCategory}
-        handleAmount={handleAmount}
-        handleDifficulty={handleDifficulty}
-        handleSubmit={handleSubmit}
-        userName={userName}
-      />
-
-        <SavedGames userData={userData} resumeGame={resumeGame} />
+          <SavedGames userData={userData} resumeGame={resumeGame} />
         </div>
       </main>
-
 
       <Footer />
     </>
