@@ -6,6 +6,7 @@ import Trivia from "./Trivia";
 import Footer from "./Footer";
 import Form from "./Form";
 import SavedGames from "./SavedGames";
+import shapes from "../assets/shapes.png"; 
 
 function App() {
   //PSEUDO CODE
@@ -280,7 +281,7 @@ function App() {
     <>
       <header>
         <div className="wrapper">
-          <h1>Not So Trivial Pursuit</h1>
+          <h1><span className="notSo">Not So</span> <span className="trivial">Trivial</span> <span className="pursuit">Pursuit</span></h1>
         </div>
         <p>TEST: {userName}</p>
       </header>
@@ -317,28 +318,24 @@ function App() {
               savedQuizArray={savedQuizArray}
               savedGame={savedGame}
             />
-          ) : (
-            <div aria-hidden="true"></div>
-          )
 
-            )
+        ) : (
+          <div aria-hidden="true"></div>
+        )}
 
+        <Form
+          handleUserName={handleUserName}
+          handleCategory={handleCategory}
+          handleAmount={handleAmount}
+          handleDifficulty={handleDifficulty}
+          handleSubmit={handleSubmit}
+          userName={userName}
+        />
 
-          }
+        <SavedGames userData={userData} resumeGame={resumeGame} />
 
-
-
-          <Form
-            handleUserName={handleUserName}
-            handleCategory={handleCategory}
-            handleAmount={handleAmount}
-            handleDifficulty={handleDifficulty}
-            handleSubmit={handleSubmit}
-            userName={userName}
-          />
-
-          <SavedGames userData={userData} resumeGame={resumeGame} />
         </div>
+        <img src={shapes} alt="" />
       </main>
 
       <Footer />

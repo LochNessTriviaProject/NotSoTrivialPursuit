@@ -5,7 +5,7 @@
 const Footer = () => {
     return (
         <footer>
-            <p>Created at <a href="https://junocollege.com">Juno College</a></p>
+            Created at <a href="https://junocollege.com">Juno College</a>
         </footer>
     )
 }
