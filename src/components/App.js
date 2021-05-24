@@ -6,6 +6,7 @@ import Trivia from "./Trivia";
 import Footer from "./Footer";
 import Form from "./Form";
 import SavedGames from "./SavedGames";
+import shapes from "../assets/shapes.png"; 
 
 function App() {
   //PSEUDO CODE
@@ -222,6 +223,7 @@ function App() {
 
         <SavedGames userData={userData} resumeGame={resumeGame} />
         </div>
+        <img src={shapes} alt="" />
       </main>
 
 
