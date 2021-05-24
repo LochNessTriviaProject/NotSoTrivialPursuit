@@ -1,6 +1,6 @@
 
 
-const Trivia = ({setDisplay, quizArray, quizCount, handleAnswerChoice, quizScore }) => {
+const Trivia = ({endGame, quizArray, quizCount, handleAnswerChoice, quizScore }) => {
   // Take response object from API call, put in dummy array then into state
   // Display question and multiple choice answers in modal. Once user selects an answer, run logic to determine if correct and play animation accordingly. Then the modal updates to the next question and so on, until the user completes the set of questions or clicks "save for later"
 const randoIndex = Math.floor(Math.random() * 4);
@@ -39,7 +39,7 @@ if (randoIndex === 0) {
       </div>
 
       <p>quiz score = {quizScore}</p>
-      <button onClick={setDisplay}>Close modal</button>
+      <button onClick={endGame}>Close modal</button>
     </div>
   );}
 
@@ -76,7 +76,7 @@ else if (randoIndex === 1) {
       </div>
 
       <p>quiz score = {quizScore}</p>
-      <button onClick={setDisplay}>Close modal</button>
+      <button onClick={endGame}>Close modal</button>
     </div>
   );}
 
@@ -114,7 +114,7 @@ else if (randoIndex === 1) {
       
 
       <p>quiz score = {quizScore}</p>
-      <button onClick={setDisplay}>Close modal</button>
+      <button onClick={endGame}>Close modal</button>
     </div>
     
   )}
@@ -152,7 +152,7 @@ else if (randoIndex === 1) {
       </div>
 
       <p>quiz score = {quizScore}</p>
-      <button onClick={setDisplay}>Close modal</button>
+      <button onClick={endGame}>Close modal</button>
     </div>
   );};
 
