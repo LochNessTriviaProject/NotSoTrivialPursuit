@@ -2,7 +2,7 @@
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Trivia = ({setDisplay, quizArray, quizCount, handleAnswerChoice, quizScore }) => {
+const Trivia = ({endGame, quizArray, quizCount, handleAnswerChoice, quizScore }) => {
   // Take response object from API call, put in dummy array then into state
   // Display question and multiple choice answers in modal. Once user selects an answer, run logic to determine if correct and play animation accordingly. Then the modal updates to the next question and so on, until the user completes the set of questions or clicks "save for later"
 const randoIndex = Math.floor(Math.random() * 4);
@@ -39,12 +39,11 @@ if (randoIndex === 0) {
           </button>
         </div>
         <p>quiz score = {quizScore}</p>
-        <button onClick={setDisplay}>
+        <button onClick={endGame}>
           <span className="srOnly">Close trivia game</span>
           <FontAwesomeIcon icon={faTimes} aria-hidden="true" />
         </button>
       </div>
-
     </div>
   );}
 
@@ -79,11 +78,12 @@ else if (randoIndex === 1) {
           </button>
         </div>
         <p>quiz score = {quizScore}</p>
-        <button onClick={setDisplay}>
+        <button onClick={endGame}>
           <span className="srOnly">Close trivia game</span>
           <FontAwesomeIcon icon={faTimes} aria-hidden="true" />
         </button>
       </div>
+
 
     </div>
   );}
@@ -119,12 +119,11 @@ else if (randoIndex === 1) {
             <button className="wrong" onClick={handleAnswerChoice}>D</button>
           </div>
           <p>quiz score = {quizScore}</p>
-          <button onClick={setDisplay}>
+          <button onClick={endGame}>
             <span className="srOnly">Close trivia game</span>
             <FontAwesomeIcon icon={faTimes} aria-hidden="true" />
           </button>
         </div>
-        
     </div>
     
   )}
@@ -160,7 +159,7 @@ else if (randoIndex === 1) {
           </button>
         </div>
         <p>quiz score = {quizScore}</p>
-        <button onClick={setDisplay}>
+        <button onClick={endGame}>
           <span className="srOnly">Close trivia game</span>
           <FontAwesomeIcon icon={faTimes} aria-hidden="true" />
         </button>
