@@ -184,6 +184,8 @@ function App() {
       });
       setUserInfo(updatedArray[0]);
     });
+
+    setDisplayTrivia(true);
   };
   return (
     <>
@@ -201,7 +203,7 @@ function App() {
             quizCount={quizCount}
             handleAnswerChoice={handleAnswerChoice}
             quizScore={quizScore}
-            setDisplay={setDisplay}
+            endGame={endGame}
             //if else statement to show saved games instead of fresh api called games!
             userInfo={userInfo}
           />
