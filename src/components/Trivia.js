@@ -1,4 +1,6 @@
-
+// Import Fontawesome icon
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Trivia = ({setDisplay, quizArray, quizCount, handleAnswerChoice, quizScore }) => {
   // Take response object from API call, put in dummy array then into state
@@ -9,16 +11,16 @@ console.log('random', randoIndex);
 if (randoIndex === 0) {
   return (
     <div className="modal">
-      <h2>TRIVIA!!</h2>
 
-      <div>
+      <div className="modalContent">
+        <h2>TRIVIA!!</h2>
         <p>{quizArray[quizCount].question}</p>
-        <div className="answersContainer">
+        <ul className="answersContainer">
           <li>A: {quizArray[quizCount].correctAnswer}</li>
           <li>B: {quizArray[quizCount].wrongAnswer1}</li>
           <li>C: {quizArray[quizCount].wrongAnswer2}</li>
           <li>D: {quizArray[quizCount].wrongAnswer3}</li>
-        </div>
+        </ul>
 
         {/* also how do we hook up these buttons to randomized options? should we just move the buttons inside those li? but then CSS might be bit tricky*/}
 
@@ -36,26 +38,29 @@ if (randoIndex === 0) {
             D
           </button>
         </div>
+        <p>quiz score = {quizScore}</p>
+        <button onClick={setDisplay}>
+          <span className="srOnly">Close trivia game</span>
+          <FontAwesomeIcon icon={faTimes} aria-hidden="true" />
+        </button>
       </div>
 
-      <p>quiz score = {quizScore}</p>
-      <button onClick={setDisplay}>Close modal</button>
     </div>
   );}
 
 else if (randoIndex === 1) {
   return (
     <div className="modal">
-      <h2>TRIVIA!!</h2>
 
-      <div>
+      <div className="modalContent">
+        <h2>TRIVIA!!</h2>
         <p>{quizArray[quizCount].question}</p>
-        <div className="answersContainer">
+        <ul className="answersContainer">
           <li>A: {quizArray[quizCount].wrongAnswer1}</li>
           <li>B: {quizArray[quizCount].correctAnswer}</li>
           <li>C: {quizArray[quizCount].wrongAnswer2}</li>
           <li>D: {quizArray[quizCount].wrongAnswer3}</li>
-        </div>
+        </ul>
 
         {/* also how do we hook up these buttons to randomized options? should we just move the buttons inside those li? but then CSS might be bit tricky*/}
 
@@ -73,21 +78,24 @@ else if (randoIndex === 1) {
             D
           </button>
         </div>
+        <p>quiz score = {quizScore}</p>
+        <button onClick={setDisplay}>
+          <span className="srOnly">Close trivia game</span>
+          <FontAwesomeIcon icon={faTimes} aria-hidden="true" />
+        </button>
       </div>
 
-      <p>quiz score = {quizScore}</p>
-      <button onClick={setDisplay}>Close modal</button>
     </div>
   );}
 
   else if (randoIndex === 2) {
   return (
     <div className="modal">
-      <h2>TRIVIA!!</h2>
 
-        <div>
+        <div className="modalContent">
+          <h2>TRIVIA!!</h2>
           <p>{quizArray[quizCount].question}</p>
-          <div className="answersContainer">
+          <ul className="answersContainer">
             <li >
               A: {quizArray[quizCount].wrongAnswer1}
             </li>
@@ -100,7 +108,7 @@ else if (randoIndex === 1) {
             <li >
               D: {quizArray[quizCount].wrongAnswer3}
             </li>
-          </div>
+          </ul>
 
           {/* also how do we hook up these buttons to randomized options? should we just move the buttons inside those li? but then CSS might be bit tricky*/}
           
@@ -110,11 +118,13 @@ else if (randoIndex === 1) {
             <button className="correct" onClick={handleAnswerChoice}>C</button>
             <button className="wrong" onClick={handleAnswerChoice}>D</button>
           </div>
+          <p>quiz score = {quizScore}</p>
+          <button onClick={setDisplay}>
+            <span className="srOnly">Close trivia game</span>
+            <FontAwesomeIcon icon={faTimes} aria-hidden="true" />
+          </button>
         </div>
-      
-
-      <p>quiz score = {quizScore}</p>
-      <button onClick={setDisplay}>Close modal</button>
+        
     </div>
     
   )}
@@ -122,16 +132,16 @@ else if (randoIndex === 1) {
   else {
   return (
     <div className="modal">
-      <h2>TRIVIA!!</h2>
 
-      <div>
+      <div className="modalContent">
+        <h2>TRIVIA!!</h2>
         <p>{quizArray[quizCount].question}</p>
-        <div className="answersContainer">
+        <ul className="answersContainer">
           <li>A: {quizArray[quizCount].wrongAnswer1}</li>
           <li>B: {quizArray[quizCount].wrongAnswer2}</li>
           <li>C: {quizArray[quizCount].wrongAnswer3}</li>
           <li>D: {quizArray[quizCount].correctAnswer}</li>
-        </div>
+        </ul>
 
         {/* also how do we hook up these buttons to randomized options? should we just move the buttons inside those li? but then CSS might be bit tricky*/}
 
@@ -149,10 +159,13 @@ else if (randoIndex === 1) {
             D
           </button>
         </div>
+        <p>quiz score = {quizScore}</p>
+        <button onClick={setDisplay}>
+          <span className="srOnly">Close trivia game</span>
+          <FontAwesomeIcon icon={faTimes} aria-hidden="true" />
+        </button>
       </div>
 
-      <p>quiz score = {quizScore}</p>
-      <button onClick={setDisplay}>Close modal</button>
     </div>
   );};
 

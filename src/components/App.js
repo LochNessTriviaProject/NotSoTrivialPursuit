@@ -226,39 +226,48 @@ function App() {
     }
   return (
     <>
-      <h1>TRIVIAAAAAAAA</h1>
-      {displayTrivia ? (
-        <Trivia
+      <header>
+        <div className="wrapper">
+          <h1>Not So Trivial Pursuit</h1>
+        </div>
+      </header>
+
+      <main>
+        <div className="wrapper">
+        {displayTrivia ? (
+          <Trivia
+            quizArray={quizArray}
+            quizCount={quizCount}
+            handleAnswerChoice={handleAnswerChoice}
+            quizScore={quizScore}
+            setDisplay={setDisplay}
+            //if else statement to show saved games instead of fresh api called games!
+            userInfo={userInfo}
+          />
+        ) : (
+          <div aria-hidden="true"></div>
+        )}
+
+        <Form
+          submitQuizAmount={submitQuizAmount}
+          submitQuizCategory={submitQuizCategory}
+          submitQuizDifficulty={submitQuizDifficulty}
+          handleUserName={handleUserName}
+          handleCategory={handleCategory}
+          handleAmount={handleAmount}
+          handleDifficulty={handleDifficulty}
+          handleSubmit={handleSubmit}
+          quizAmount={quizAmount}
+          quizCategory={quizCategory}
+          quizDifficulty={quizDifficulty}
+          userName={userName}
+          dbRef={dbRef}
           quizArray={quizArray}
-          quizCount={quizCount}
-          handleAnswerChoice={handleAnswerChoice}
-          quizScore={quizScore}
-          setDisplay={setDisplay}
-          //if else statement to show saved games instead of fresh api called games!
-          userInfo={userInfo}
         />
-      ) : (
-        <div></div>
-      )}
 
-      <Form
-        submitQuizAmount={submitQuizAmount}
-        submitQuizCategory={submitQuizCategory}
-        submitQuizDifficulty={submitQuizDifficulty}
-        handleUserName={handleUserName}
-        handleCategory={handleCategory}
-        handleAmount={handleAmount}
-        handleDifficulty={handleDifficulty}
-        handleSubmit={handleSubmit}
-        quizAmount={quizAmount}
-        quizCategory={quizCategory}
-        quizDifficulty={quizDifficulty}
-        userName={userName}
-        dbRef={dbRef}
-        quizArray={quizArray}
-      />
-
-      <SavedGames userData={userData} resumeGame={resumeGame} />
+        <SavedGames userData={userData} resumeGame={resumeGame} />
+        </div>
+      </main>
 
       <Footer />
     </>
