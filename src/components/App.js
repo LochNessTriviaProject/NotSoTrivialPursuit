@@ -187,20 +187,27 @@ function App() {
   };
   return (
     <>
-      <h1>TRIVIAAAAAAAA</h1>
-      {displayTrivia ? (
-        <Trivia
-          quizArray={quizArray}
-          quizCount={quizCount}
-          handleAnswerChoice={handleAnswerChoice}
-          quizScore={quizScore}
-          endGame={endGame}
-          //if else statement to show saved games instead of fresh api called games!
-          userInfo={userInfo}
-        />
-      ) : (
-        <div></div>
-      )}
+      <header>
+        <div className="wrapper">
+          <h1>Not So Trivial Pursuit</h1>
+        </div>
+      </header>
+
+      <main>
+        <div className="wrapper">
+        {displayTrivia ? (
+          <Trivia
+            quizArray={quizArray}
+            quizCount={quizCount}
+            handleAnswerChoice={handleAnswerChoice}
+            quizScore={quizScore}
+            setDisplay={setDisplay}
+            //if else statement to show saved games instead of fresh api called games!
+            userInfo={userInfo}
+          />
+        ) : (
+          <div aria-hidden="true"></div>
+        )}
 
       <Form
         handleUserName={handleUserName}
@@ -211,7 +218,10 @@ function App() {
         userName={userName}
       />
 
-      <SavedGames userData={userData} resumeGame={resumeGame} />
+        <SavedGames userData={userData} resumeGame={resumeGame} />
+        </div>
+      </main>
+
 
       <Footer />
     </>
