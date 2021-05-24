@@ -9,18 +9,19 @@
 
 
 const SavedGames = ({userData, resumeGame})=> {
-
+console.log(userData);
     return (
         <>
             <ul>
                 {
+                    
                     userData.map((user)=>{
-
+                        console.log(user);
                         return (
                             <>
                             <ul className="savedGames">
                                 <li>Name: {user.name} Progress: {user.progress}/10 quizzes</li>
-                                <button onClick={resumeGame} className={user.name}>Resume</button>
+                                <button onClick={()=>{resumeGame(user.name)}} className={user.name}>Resume</button>
                             </ul>
                             </>
                         )

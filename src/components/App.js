@@ -19,7 +19,6 @@ function App() {
   const [quizOptions, setQuizOptions] = useState([]);
 
   const [savedGame, setSavedGame] = useState(false);
-
   const [userName, setUserName] = useState("");
   const [savedQuizArray, setSavedQuizArray] = useState([1,2,3]);
 
@@ -28,6 +27,8 @@ function App() {
   const [quizCount, setQuizCount] = useState(0);
   const [quizScore, setQuizScore] = useState(0);
   const [userData, setUserData] = useState([]);
+  const [resumeData, setResumeData] = useState([]);
+  const [savedQuizScore, setSavedQuizScore] = useState([]);
 
   const dbRef = firebase.database().ref();
   // test change
@@ -126,7 +127,7 @@ function App() {
     dbRef.push(quizArray);
     console.log(quizArray);
     console.log("we have clicked");
-    setDisplayTrivia(!displayTrivia);
+    setDisplayTrivia(true);
   };
 
   const handleUserName = (event) => {
@@ -148,30 +149,128 @@ function App() {
     }
   };
 
-  const endGame = () => {
+  const endGame = (savedUserName) => {
     // when user wants to end game, hide modal
     setDisplayTrivia(false);
-    // After hiding modal, update the progress (quizCount)!
-    // dbRef.push()? dbRef.update()?
-    
-  };
-
-  const resumeGame = () => {
+    let updatedArray = [];
 
     dbRef.on("value", (res) => {
       const newDataArray = [];
       const data = res.val();
-
       console.log("data", data);
-      
-      let newSavedQuizArray = [];
 
       for (let key in data) {
-        console.log(data[key]);
-        newSavedQuizArray = data[key];
+        for (let i = 0; i < data[key].length; i++) {
+          let searchObj = {
+            key: key,
+            name: data[key][i].name,
+            // progress: quizCount,
+            // score: quizScore,
+            question: data[key][i].question,
+            correctAnswer: data[key][i].correctAnswer,
+            wrongAnswer1: data[key][i].wrongAnswer1,
+            wrongAnswer2: data[key][i].wrongAnswer2,
+            wrongAnswer3: data[key][i].wrongAnswer3,
+          };
+          console.log("key", key);
+          console.log(searchObj);
+          console.log(data[key][i]);
+          newDataArray.unshift(searchObj);
+        }
+
+        console.log(newDataArray);
       }
-      console.log(newSavedQuizArray);
-      setSavedQuizArray(newSavedQuizArray);
+
+      console.log(newDataArray);
+      console.log(savedUserName);
+
+      updatedArray = newDataArray.filter((user) => {
+        console.log(user);
+        console.log(user.name);
+        return user.name == savedUserName;
+      });
+
+      console.log(updatedArray);
+
+    });
+        console.log(updatedArray);
+        // console.log(updatedArray.key);
+        const savedDbRef = firebase.database().ref(updatedArray[0].key);
+
+        const data = {
+          progress: quizCount,
+          score: quizScore,
+        };
+
+        savedDbRef.update(data);
+        setResumeData(updatedArray);
+        setQuizScore(0);
+
+    // After hiding modal, update the progress (quizCount)!
+    // dbRef.push()? dbRef.update()?
+
+    //savedQuizArray[0].key KEY
+    
+    
+    // savedDbRef.on('value', (res)=>{
+    //   const data = res.val();
+    //   console.log(data);
+    // })
+
+    // let updates = {};
+    // updates
+
+    //  var updates = {};
+    //  updates["/posts/" + newPostKey] = postData;
+    //  updates["/user-posts/" + uid + "/" + newPostKey] = postData;
+
+    //  return firebase.database().ref().update(updates);
+  };
+
+  const resumeGame = (savedUserName) => {
+
+    dbRef.on("value", (res) => {
+      const newDataArray = [];
+      const data = res.val();
+      console.log("data", data);
+
+              for (let key in data) {
+                console.log(data[key]);
+                console.log(Object.keys(data[key]));
+                console.log(Object.keys(data[key]).length-2);
+                console.log(data[key][0]);
+
+                  for (let i=0; i<Object.keys(data[key]).length-2;i++){
+                    let searchObj = {
+                      key: key,
+                      name: data[key][i].name,
+                      progress: data[key][i].progress,
+                      question: data[key][i].question,
+                      correctAnswer: data[key][i].correctAnswer,
+                      wrongAnswer1: data[key][i].wrongAnswer1,
+                      wrongAnswer2: data[key][i].wrongAnswer2,
+                      wrongAnswer3: data[key][i].wrongAnswer3,
+                    };
+
+                    console.log(data[key]);
+                    console.log("key", key);
+                    console.log(searchObj);
+                    console.log(data[key][i]);
+                    newDataArray.unshift(searchObj);
+                  }
+                console.log(newDataArray);
+              }
+              console.log("newdataArray", newDataArray);
+
+      const updatedArray = newDataArray.filter((user) => {
+        console.log(user);
+        console.log(user.name);
+        return user.name == savedUserName;
+      });
+
+      console.log("what", updatedArray);
+
+      setSavedQuizArray(updatedArray);
       setSavedGame(true);
     });
 
@@ -183,6 +282,7 @@ function App() {
         <div className="wrapper">
           <h1>Not So Trivial Pursuit</h1>
         </div>
+        <p>TEST: {userName}</p>
       </header>
 
       <main>

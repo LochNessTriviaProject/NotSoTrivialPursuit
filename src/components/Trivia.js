@@ -16,6 +16,9 @@ const Trivia = ({
   // Display question and multiple choice answers in modal. Once user selects an answer, run logic to determine if correct and play animation accordingly. Then the modal updates to the next question and so on, until the user completes the set of questions or clicks "save for later"
   const randoIndex = Math.floor(Math.random() * 4);
   console.log("random", randoIndex);
+  console.log(quizArray);
+  console.log(quizCount);
+  // const userNameForProgress = quizArray[0].name;
 
   if (randoIndex === 0) {
     return (
@@ -47,7 +50,7 @@ const Trivia = ({
             </button>
           </div>
           <p>quiz score = {quizScore}</p>
-          <button onClick={endGame}>
+          <button onClick={()=>{endGame(quizArray[0].name)}}>
             <span className="srOnly">Close trivia game</span>
             <FontAwesomeIcon icon={faTimes} aria-hidden="true" />
           </button>
@@ -84,7 +87,11 @@ const Trivia = ({
             </button>
           </div>
           <p>quiz score = {quizScore}</p>
-          <button onClick={endGame}>
+          <button
+            onClick={() => {
+              endGame(quizArray[0].name);
+            }}
+          >
             <span className="srOnly">Close trivia game</span>
             <FontAwesomeIcon icon={faTimes} aria-hidden="true" />
           </button>
@@ -121,7 +128,11 @@ const Trivia = ({
             </button>
           </div>
           <p>quiz score = {quizScore}</p>
-          <button onClick={endGame}>
+          <button
+            onClick={() => {
+              endGame(quizArray[0].name);
+            }}
+          >
             <span className="srOnly">Close trivia game</span>
             <FontAwesomeIcon icon={faTimes} aria-hidden="true" />
           </button>
@@ -158,7 +169,11 @@ const Trivia = ({
             </button>
           </div>
           <p>quiz score = {quizScore}</p>
-          <button onClick={endGame}>
+          <button
+            onClick={() => {
+              endGame(quizArray[0].name);
+            }}
+          >
             <span className="srOnly">Close trivia game</span>
             <FontAwesomeIcon icon={faTimes} aria-hidden="true" />
           </button>
