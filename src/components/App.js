@@ -191,7 +191,7 @@ function App() {
     <>
       <header>
         <div className="wrapper">
-          <h1>Not So Trivial Pursuit</h1>
+          <h1><span className="notSo">Not So</span> <span className="trivial">Trivial</span> <span className="pursuit">Pursuit</span></h1>
         </div>
       </header>
 
@@ -211,14 +211,14 @@ function App() {
           <div aria-hidden="true"></div>
         )}
 
-      <Form
-        handleUserName={handleUserName}
-        handleCategory={handleCategory}
-        handleAmount={handleAmount}
-        handleDifficulty={handleDifficulty}
-        handleSubmit={handleSubmit}
-        userName={userName}
-      />
+        <Form
+          handleUserName={handleUserName}
+          handleCategory={handleCategory}
+          handleAmount={handleAmount}
+          handleDifficulty={handleDifficulty}
+          handleSubmit={handleSubmit}
+          userName={userName}
+        />
 
         <SavedGames userData={userData} resumeGame={resumeGame} />
         </div>
