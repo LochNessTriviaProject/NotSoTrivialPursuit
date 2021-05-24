@@ -75,32 +75,34 @@ function App() {
         
         setQuizArray(newQuizArray);
 
-            dbRef.on("value", (res) => {
-              const newDataArray = [];
-              const data = res.val();
-
-              console.log("data", data);
-              for (let key in data) {
-                let searchObj = {
-                  key: key,
-                  name: data[key][0].name,
-                  progress: data[key][0].progress,
-                };
-                console.log("key", key);
-                console.log(searchObj);
-                newDataArray.unshift(searchObj);
-              }
-              
-              setUserData(newDataArray);
-              console.log(newDataArray);
-              console.log(userData);
-
-            });
+            
 
       }
       else {
         alert('no dice pal');
       }
+
+      dbRef.on("value", (res) => {
+        const newDataArray = [];
+        const data = res.val();
+
+        console.log("data", data);
+        for (let key in data) {
+          let searchObj = {
+            key: key,
+            name: data[key][0].name,
+            progress: data[key][0].progress,
+          };
+          console.log("key", key);
+          console.log(searchObj);
+          newDataArray.unshift(searchObj);
+        }
+
+        setUserData(newDataArray);
+        console.log(newDataArray);
+        console.log(userData);
+      });
+
     });
 
 
@@ -110,19 +112,7 @@ function App() {
 
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [quizCategory, userName]);
-
-  const submitQuizAmount = (amount) => {
-    setQuizAmount(amount);
-  }
-
-  const submitQuizCategory = (category) => {
-    setQuizCategory(category);
-  }
-
-  const submitQuizDifficulty = (difficulty) => {
-    setQuizDifficulty(difficulty);
-  }
+  }, [userName]);
 
   const handleCategory = (event) => {
     // console.log(event.target.value);
@@ -146,12 +136,7 @@ function App() {
         event.preventDefault();
         // displayTrivia
         dbRef.push(quizArray);
-        submitQuizCategory(quizCategory);
-        submitQuizAmount(quizAmount);
-        submitQuizDifficulty(quizDifficulty);
-        console.log("dbReftimes", dbRef);
-        // console.log(quizArray);
-        console.log(dbRef);
+        console.log(quizArray);
         console.log("we have clicked");
         setDisplayTrivia(!displayTrivia);
       };
@@ -178,8 +163,12 @@ function App() {
       }
     };
 
-    const setDisplay = () => {
+    const endGame = () => {
+      // when user wants to end game, hide modal
       setDisplayTrivia(false);
+      // After hiding modal, update the progress (quizCount)! 
+      // dbRef.push()? dbRef.update()?
+
     }
 
     const resumeGame = (event) => {
@@ -233,7 +222,7 @@ function App() {
           quizCount={quizCount}
           handleAnswerChoice={handleAnswerChoice}
           quizScore={quizScore}
-          setDisplay={setDisplay}
+          endGame={endGame}
           //if else statement to show saved games instead of fresh api called games!
           userInfo={userInfo}
         />
@@ -242,20 +231,12 @@ function App() {
       )}
 
       <Form
-        submitQuizAmount={submitQuizAmount}
-        submitQuizCategory={submitQuizCategory}
-        submitQuizDifficulty={submitQuizDifficulty}
         handleUserName={handleUserName}
         handleCategory={handleCategory}
         handleAmount={handleAmount}
         handleDifficulty={handleDifficulty}
         handleSubmit={handleSubmit}
-        quizAmount={quizAmount}
-        quizCategory={quizCategory}
-        quizDifficulty={quizDifficulty}
         userName={userName}
-        dbRef={dbRef}
-        quizArray={quizArray}
       />
 
       <SavedGames userData={userData} resumeGame={resumeGame} />

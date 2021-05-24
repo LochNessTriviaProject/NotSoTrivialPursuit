@@ -1,21 +1,12 @@
 import { useState } from 'react';
 
 const Form = ({
-
-  quizAmount,
-  quizCategory,
-  quizDifficulty,
-  submitQuizCategory,
-  submitQuizAmount,
-  submitQuizDifficulty,
   handleUserName,
   handleCategory,
   handleAmount,
   handleDifficulty,
   userName,
   handleSubmit,
-  dbRef,
-  quizArray,
 }) => {
 
 
