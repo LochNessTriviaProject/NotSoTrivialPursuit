@@ -235,6 +235,7 @@ html {
 body {
   font-family: "Lato", sans-serif;
   font-size: 2rem;
+  overflow-x: hidden;
 }
 
 .wrapper {
@@ -255,14 +256,19 @@ ul {
 }
 
 a {
-  color: #000;
   text-decoration: none;
 }
 
-main img {
+a:hover,
+a:focus {
+  text-decoration: underline;
+}
+
+.shapes {
   position: fixed;
   bottom: -2rem;
   right: -2.2rem;
+  z-index: 5;
 }
 
 /* Header Styles */
@@ -277,6 +283,7 @@ h1 {
   margin: -1rem 0 0;
   color: #550e1b;
   font-weight: normal;
+  text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
 }
 
 h1::before {
@@ -381,12 +388,20 @@ select {
   background-size: 10%;
   margin: 1rem;
   border: 1px solid #000;
+  box-shadow: 10px 10px 15px -10px rgba(0, 0, 0, 0.3);
+}
+
+select:hover,
+select:focus {
+  cursor: pointer;
 }
 
 input {
   padding: 1rem;
   width: 50rem;
   font-family: "Lato", sans-serif;
+  border: 1px solid #000;
+  box-shadow: 10px 10px 15px -10px rgba(0, 0, 0, 0.3);
 }
 
 button[type="submit"] {
@@ -449,6 +464,21 @@ button[type="submit"]:active {
 
 /* Footer Styles */
 footer {
+  font-size: 1.8rem;
+  position: absolute;
+  bottom: -49rem;
+  width: 100%;
   text-align: center;
-  position: relative;
+  z-index: 15;
+  color: #fff;
+}
+
+footer a {
+  color: #fff;
+}
+
+.wave {
+  position: absolute;
+  bottom: -50rem;
+  z-index: 10;
 }

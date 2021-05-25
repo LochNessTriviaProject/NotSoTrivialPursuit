@@ -338,7 +338,7 @@ function App() {
         <SavedGames userData={userData} resumeGame={resumeGame} />
 
         </div>
-        <img src={shapes} alt="" />
+        <img src={shapes} alt="" className="shapes"/>
       </main>
 
       <Footer />
