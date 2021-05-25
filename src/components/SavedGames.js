@@ -20,7 +20,7 @@ console.log(userData);
                         return (
                             <>
                             <ul className="savedGames">
-                                <li>Name: {user.name} Progress: {user.progress}/10 quizzes</li>
+                                <li>Name: {user.name} Progress: {user.progress}/10 questions</li>
                                 <button onClick={()=>{resumeGame(user.name)}} className={user.name}>Resume</button>
                             </ul>
                             </>

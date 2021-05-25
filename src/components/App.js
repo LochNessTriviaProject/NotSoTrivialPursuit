@@ -56,17 +56,19 @@ function App() {
         const quizObjArray = res.data.results;
 
         console.log(quizObjArray);
-
+        let re = /(&quot;)|(&#039;)/gi;
+        
         const newQuizArray = res.data.results.map((quiz, index) => {
+          console.log(re);
           return {
             name: userName,
             progress: quizCount,
             key: `quiz-${index}`,
-            question: res.data.results[index].question,
-            correctAnswer: res.data.results[index].correct_answer,
-            wrongAnswer1: res.data.results[index].incorrect_answers[0],
-            wrongAnswer2: res.data.results[index].incorrect_answers[1],
-            wrongAnswer3: res.data.results[index].incorrect_answers[2],
+            question: res.data.results[index].question.replace(re, "'"),
+            correctAnswer: res.data.results[index].correct_answer.replace(re, "'"),
+            wrongAnswer1: res.data.results[index].incorrect_answers[0].replace(re, "'"),
+            wrongAnswer2: res.data.results[index].incorrect_answers[1].replace(re, "'"),
+            wrongAnswer3: res.data.results[index].incorrect_answers[2].replace(re, "'"),
           };
         });
 
@@ -133,12 +135,12 @@ function App() {
 
   const handleUserName = (event) => {
     // console.log(event.target.value);
-    console.log(event);
+    // console.log(event);
     let userNameValue = event.target.value;
     setUserName(userNameValue);
   };
   const handleAnswerChoice = (event) => {
-    console.log(event.target);
+    // console.log(event.target);
 
     if (event.target.className === "correct") {
       //SHOW CORRECT ANIMATION HERE?
@@ -158,10 +160,15 @@ function App() {
     dbRef.on("value", (res) => {
       const newDataArray = [];
       const data = res.val();
-      console.log("data", data);
-
+      
       for (let key in data) {
-        for (let i = 0; i < data[key].length; i++) {
+        
+        const counter = Object.keys(data[key]).length;
+        console.log(counter);
+        // console.log("data", data);
+        // console.log("key is here", key);
+        for (let i = 0; i < (counter-2); i++) {
+          console.log(data[key]);
           let searchObj = {
             key: key,
             name: data[key][i].name,
@@ -173,9 +180,10 @@ function App() {
             wrongAnswer2: data[key][i].wrongAnswer2,
             wrongAnswer3: data[key][i].wrongAnswer3,
           };
-          console.log("key", key);
-          console.log(searchObj);
-          console.log(data[key][i]);
+          
+          // console.log("key", key);
+          // console.log(searchObj);
+          // console.log(data[key][i]);
           newDataArray.unshift(searchObj);
         }
 
@@ -253,10 +261,10 @@ function App() {
                       wrongAnswer3: data[key][i].wrongAnswer3,
                     };
 
-                    console.log(data[key]);
-                    console.log("key", key);
-                    console.log(searchObj);
-                    console.log(data[key][i]);
+                    // console.log(data[key]);
+                    // console.log("key", key);
+                    // console.log(searchObj);
+                    // console.log(data[key][i]);
                     newDataArray.unshift(searchObj);
                   }
                 console.log(newDataArray);
@@ -266,7 +274,7 @@ function App() {
       const updatedArray = newDataArray.filter((user) => {
         console.log(user);
         console.log(user.name);
-        return user.name == savedUserName;
+        return user.name === savedUserName;
       });
 
       console.log("what", updatedArray);
@@ -341,7 +349,7 @@ function App() {
         <img src={shapes} alt="" className="shapes"/>
       </main>
 
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }
