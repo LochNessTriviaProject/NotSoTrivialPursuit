@@ -10,7 +10,7 @@ const Footer = () => {
                     Created by Seunggi Lee, Emily Petracco, Spencer Thompson, and Nicole Wu at <a href="https://junocollege.com">Juno College</a>, 2021.
                 </div>
             </footer>
-            <img src={wave} alt="" className="wave"/>
+            {/* <img src={wave} alt="" className="wave"/> */}
         </>
     )
 }
