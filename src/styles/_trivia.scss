@@ -51,8 +51,7 @@
   cursor: pointer;
   background-color: $yellow;
   transition: all 0.3s ease;
-  &:hover,
-  &:focus {
+  &:hover {
     background-color: $beige;
   }
 }

@@ -53,6 +53,11 @@
     top: 9rem;
     right: -5rem;
   }
+  .exitButton {
+    font-size: 3.2rem;
+    bottom: 48rem;
+    right: -23.6rem;
+  }
 }
 
 @media (max-width: 540px) {
@@ -66,5 +71,35 @@
   select,
   input {
     width: 30rem;
+  }
+}
+
+@media (max-width: 477px) {
+  header .wrapper {
+    padding-top: 2rem;
+  }
+  h1 {
+    width: 40rem;
+    .notSo {
+      right: 6.5rem;
+    }
+    .trivial::after {
+      top: 12rem;
+    }
+    .pursuit {
+      bottom: 13rem;
+      left: 7rem;
+    }
+    .pursuit::before {
+      top: -5rem;
+      left: 20rem;
+    }
+  }
+  h1::before {
+    left: 16.4rem;
+  }
+  h1::after {
+    bottom: 33rem;
+    right: 11rem;
   }
 }
