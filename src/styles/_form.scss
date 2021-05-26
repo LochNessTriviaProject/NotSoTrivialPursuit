@@ -1,0 +1,72 @@
+/* Form Styles */
+
+form {
+  text-transform: uppercase;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+fieldset {
+  border: none;
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  height: 15rem;
+  text-align: center;
+}
+
+select {
+  padding: 1rem;
+  font-family: "Lato", sans-serif;
+  width: 30rem;
+  appearance: none;
+  background-image: url("../assets/chevronDown.svg");
+  background-repeat: no-repeat;
+  background-position: 98%;
+  background-size: 10%;
+  // margin: 8.5rem;
+  border: 1px solid #000;
+  box-shadow: 10px 10px 15px -10px rgba(0, 0, 0, 0.3);
+}
+
+select:hover,
+select:focus {
+  cursor: pointer;
+}
+
+input {
+  padding: 1rem;
+  width: 50rem;
+  font-family: "Lato", sans-serif;
+  border: 1px solid #000;
+  box-shadow: 10px 10px 15px -10px rgba(0, 0, 0, 0.3);
+}
+
+.enterName {
+  display: flex;
+  flex-direction: column;
+}
+
+button[type="submit"] {
+  padding: 1rem 2rem;
+  font-family: "Lato", sans-serif;
+  border: none;
+  background-color: #ffe500;
+  cursor: pointer;
+  border-radius: 1.5rem;
+  box-shadow: 0 0.9rem #999;
+  margin-bottom: 8rem;
+  display: flex;
+  justify-content: center;
+}
+
+button[type="submit"]:hover {
+  background-color: #fff06d;
+}
+
+button[type="submit"]:active {
+  background-color: #cfbb00;
+  box-shadow: 0 0.5rem #666;
+  transform: translateY(4px);
+}

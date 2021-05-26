@@ -8,28 +8,29 @@
 
 
 
-const SavedGames = ({userData, resumeGame})=> {
-console.log(userData);
+const SavedGames = ({ userData, resumeGame }) => {
+    console.log(userData);
     return (
         <>
-            <ul>
-                {
-                    
-                    userData.map((user)=>{
-                        console.log(user);
-                        return (
-                            <>
-                            <ul className="savedGames">
-                                <li>Name: {user.name} Progress: {user.progress}/10 questions</li>
-                                <button onClick={()=>{resumeGame(user.name)}} className={user.name}>Resume</button>
-                            </ul>
-                            </>
-                        )
+            <div className="wrapper">
+                <h2>Saved Games:</h2>
+                <ul className="savedGames">
+                    {
 
-                    })
-                }
+                        userData.map((user) => {
+                            console.log(user);
+                            return (
+                                <>
+                                    <li>
+                                        <button onClick={() => { resumeGame(user.name) }} className={user.name}><span>Name:</span> {user.name} | <span>Progress:</span> {user.progress}/10 questions</button></li>
+                                </>
+                            )
 
-            </ul>
+                        })
+                    }
+
+                </ul>
+            </div>
         </>
     )
 }

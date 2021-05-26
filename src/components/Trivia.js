@@ -1,7 +1,8 @@
 // Import Fontawesome icon
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {useState} from 'react'
+import { useState } from 'react'
+import blob from '../assets/blob.svg';
 
 const Trivia = ({
   savedGame,
@@ -24,14 +25,16 @@ const Trivia = ({
     return (
       <div className="modal">
         <div className="modalContent">
-          <h2>TRIVIA!!</h2>
-          <p>{quizArray[quizCount].question}</p>
-          <ul className="answersContainer">
-            <li>A: {quizArray[quizCount].correctAnswer}</li>
-            <li>B: {quizArray[quizCount].wrongAnswer1}</li>
-            <li>C: {quizArray[quizCount].wrongAnswer2}</li>
-            <li>D: {quizArray[quizCount].wrongAnswer3}</li>
-          </ul>
+          <img src={blob} alt="" />
+          <div className="triviaContent">
+            <p>{quizArray[quizCount].question}</p>
+            <ul className="answersContainer">
+              <li>A: {quizArray[quizCount].correctAnswer}</li>
+              <li>B: {quizArray[quizCount].wrongAnswer1}</li>
+              <li>C: {quizArray[quizCount].wrongAnswer2}</li>
+              <li>D: {quizArray[quizCount].wrongAnswer3}</li>
+            </ul>
+          </div>
 
           {/* also how do we hook up these buttons to randomized options? should we just move the buttons inside those li? but then CSS might be bit tricky*/}
 
@@ -50,7 +53,7 @@ const Trivia = ({
             </button>
           </div>
           <p>quiz score = {quizScore}</p>
-          <button onClick={()=>{endGame(quizArray[0].name)}}>
+          <button className="exitButton" onClick={() => { endGame(quizArray[0].name) }}>
             <span className="srOnly">Close trivia game</span>
             <FontAwesomeIcon icon={faTimes} aria-hidden="true" />
           </button>
@@ -61,15 +64,17 @@ const Trivia = ({
     return (
       <div className="modal">
         <div className="modalContent">
-          <h2>TRIVIA!!</h2>
-          <p>{quizArray[quizCount].question}</p>
-          <ul className="answersContainer">
-            <li>A: {quizArray[quizCount].wrongAnswer1}</li>
-            <li>B: {quizArray[quizCount].correctAnswer}</li>
-            <li>C: {quizArray[quizCount].wrongAnswer2}</li>
-            <li>D: {quizArray[quizCount].wrongAnswer3}</li>
-          </ul>
-
+          <img src={blob} alt="" />
+          <div className="triviaContent">
+            <p>{quizArray[quizCount].question}</p>
+            <ul className="answersContainer">
+              <li>A: {quizArray[quizCount].wrongAnswer1}</li>
+              <li>B: {quizArray[quizCount].correctAnswer}</li>
+              <li>C: {quizArray[quizCount].wrongAnswer2}</li>
+              <li>D: {quizArray[quizCount].wrongAnswer3}</li>
+            </ul>
+          </div>
+          
           {/* also how do we hook up these buttons to randomized options? should we just move the buttons inside those li? but then CSS might be bit tricky*/}
 
           <div className="buttonsContainer">
@@ -88,6 +93,7 @@ const Trivia = ({
           </div>
           <p>quiz score = {quizScore}</p>
           <button
+            className="exitButton"
             onClick={() => {
               endGame(quizArray[0].name);
             }}
@@ -102,14 +108,16 @@ const Trivia = ({
     return (
       <div className="modal">
         <div className="modalContent">
-          <h2>TRIVIA!!</h2>
-          <p>{quizArray[quizCount].question}</p>
-          <ul className="answersContainer">
-            <li>A: {quizArray[quizCount].wrongAnswer1}</li>
-            <li>B: {quizArray[quizCount].wrongAnswer2}</li>
-            <li>C: {quizArray[quizCount].correctAnswer}</li>
-            <li>D: {quizArray[quizCount].wrongAnswer3}</li>
-          </ul>
+          <img src={blob} alt="" />
+          <div className="triviaContent">
+            <p>{quizArray[quizCount].question}</p>
+            <ul className="answersContainer">
+              <li>A: {quizArray[quizCount].wrongAnswer1}</li>
+              <li>B: {quizArray[quizCount].wrongAnswer2}</li>
+              <li>C: {quizArray[quizCount].correctAnswer}</li>
+              <li>D: {quizArray[quizCount].wrongAnswer3}</li>
+            </ul>
+          </div>
 
           {/* also how do we hook up these buttons to randomized options? should we just move the buttons inside those li? but then CSS might be bit tricky*/}
 
@@ -129,6 +137,7 @@ const Trivia = ({
           </div>
           <p>quiz score = {quizScore}</p>
           <button
+            className="exitButton"
             onClick={() => {
               endGame(quizArray[0].name);
             }}
@@ -143,14 +152,16 @@ const Trivia = ({
     return (
       <div className="modal">
         <div className="modalContent">
-          <h2>TRIVIA!!</h2>
-          <p>{quizArray[quizCount].question}</p>
-          <ul className="answersContainer">
-            <li>A: {quizArray[quizCount].wrongAnswer1}</li>
-            <li>B: {quizArray[quizCount].wrongAnswer2}</li>
-            <li>C: {quizArray[quizCount].wrongAnswer3}</li>
-            <li>D: {quizArray[quizCount].correctAnswer}</li>
-          </ul>
+          <img src={blob} alt="" />
+          <div className="triviaContent">
+            <p>{quizArray[quizCount].question}</p>
+            <ul className="answersContainer">
+              <li>A: {quizArray[quizCount].wrongAnswer1}</li>
+              <li>B: {quizArray[quizCount].wrongAnswer2}</li>
+              <li>C: {quizArray[quizCount].wrongAnswer3}</li>
+              <li>D: {quizArray[quizCount].correctAnswer}</li>
+            </ul>
+          </div>
 
           {/* also how do we hook up these buttons to randomized options? should we just move the buttons inside those li? but then CSS might be bit tricky*/}
 
@@ -170,6 +181,7 @@ const Trivia = ({
           </div>
           <p>quiz score = {quizScore}</p>
           <button
+            className="exitButton"
             onClick={() => {
               endGame(quizArray[0].name);
             }}

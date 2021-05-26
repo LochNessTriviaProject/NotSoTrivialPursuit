@@ -92,7 +92,7 @@ const Form = ({
         <fieldset>
           {/* Text input for unique game ID (likely user's name/nickname) */}
           <div className="enterName">
-            <label htmlFor="playerName">Enter your name</label>
+            <label htmlFor="playerName">Enter your code name</label>
             <input
                 type="text"
                 id="playerName"
