@@ -5,11 +5,15 @@ import firebase from "../config/firebase";
 
 // Clicking on a saved game will pop up a modal with the current question displaying
 
-// In progress games will show at at the top, with some indicator that they are still ongoing, completed games will show up at the bottom with the score displayed.
+
+// In progress games will show at at the top, with some indicator that they are still ongoing, completed games will show up at the bottom with the score displayed. 
+
+
 
 const SavedGames = ({ userData, resumeGame }) => {
-
-  const dbRef = firebase.database().ref();
+    console.log(userData);
+  
+    const dbRef = firebase.database().ref();
 const newDataArray = [];
   dbRef.on("value", (res) => {
     
@@ -26,43 +30,38 @@ const newDataArray = [];
     }
 
   });
+    return (
+        <>
+            <div className="wrapper">
+                <h2>Saved Games:</h2>
+                <ul className="savedGames">
+                    {
 
-  return (
-    <>
-      <ul>
-        {newDataArray.map((user) => {
-
-
-          return (
-            <>
-              <ul className="savedGames">
-                {user.score ? (
+                        newDataArray.map((user) => {
+                            console.log(user);
+                            return (
+                                <>
+                                                   {user.score ? (
                   <li>
-                    Name: {user.name} Progress: {user.progress}/10 questions
-                    Score: {user.score}
-                  </li>
+                                        <button onClick={() => { resumeGame(user.name) }} className={user.name}><span>Name:</span> {user.name} | <span>Progress:</span> {user.progress}/10 questions Score: user.score</button></li>
                 ) : (
+                  
                   <li>
-                    Name: {user.name} Progress: 0/10 questions
-                    Score: 0 // IT MEANS USER DIDNT USE PROPER ENGAME FUNCTION!
-                  </li>
-                )}
+                                        <button onClick={() => { resumeGame(user.name) }} className={user.name}><span>Name:</span> {user.name} | <span>Progress:</span> 0/10 questions Score: 0</button></li>
+                  
 
-                <button
-                  onClick={() => {
-                    resumeGame(user.name);
-                  }}
-                  className={user.name}
-                >
-                  Resume
-                </button>
-              </ul>
-            </>
-          );
-        })}
-      </ul>
-    </>
-  );
-};
+                )}
+                                </>
+                            )
+
+                        })
+                    }
+
+                </ul>
+            </div>
+        </>
+    )
+}
 
 export default SavedGames;
+

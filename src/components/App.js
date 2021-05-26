@@ -1,4 +1,4 @@
-import "../styles/App.css";
+import "../styles/App.scss";
 import firebase from "../config/firebase";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -346,7 +346,7 @@ function App() {
         <div className="wrapper">
           <h1><span className="notSo">Not So</span> <span className="trivial">Trivial</span> <span className="pursuit">Pursuit</span></h1>
         </div>
-        <p>TEST: {userName}</p>
+        {/* <p>TEST: {userName}</p> */}
       </header>
 
       <main>
@@ -404,7 +404,7 @@ function App() {
         <img src={shapes} alt="" className="shapes"/>
       </main>
 
-      {/* <Footer /> */}
+      <Footer />
     </>
   );
 }

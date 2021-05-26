@@ -1,0 +1,77 @@
+/* Trivia Component Styles */
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  width: 100%;
+  height: 100%;
+  background: #530e1a80;
+}
+
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4.5rem 3rem 3rem;
+  position: relative;
+  background: transparent;
+  color: #000;
+  img {
+    position: absolute;
+    z-index: -1;
+    width: 110%;
+    min-width: 100rem;
+  }
+  p {
+    padding: 0 3rem;
+  }
+}
+
+.triviaContent {
+  background-color: white;
+  border-radius: 0.5rem;
+  margin: 3.5rem;
+}
+
+.wrong,
+.correct {
+  border: none;
+  border-radius: 50%;
+  padding: 2rem 3rem;
+  font-size: 3rem;
+  margin: 2rem 1rem;
+  cursor: pointer;
+  background-color: #fff8f3;
+  transition: all 0.3s ease;
+  &:hover, &:focus {
+    background-color: #ffe500;
+  }
+}
+
+.answersContainer {
+  display: flex;
+}
+
+.answersContainer li {
+  margin: 2rem;
+  list-style: none;
+}
+
+.exitButton {
+  background: none;
+  border: none;
+  font-size: 5rem;
+  cursor: pointer;
+  position: relative;
+  bottom: 460px;
+  right: -259px;
+  &:hover, &:focus {
+    color: #fff8f3;
+  }
+}

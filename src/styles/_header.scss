@@ -1,0 +1,80 @@
+/* Header Styles */
+
+header .wrapper {
+  padding: 0 0 10rem;
+  display: flex;
+  justify-content: center;
+}
+
+h1 {
+  font-size: 8rem;
+  margin: -1rem 0 0;
+  color: #550e1b;
+  font-weight: normal;
+  text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+h1::before {
+  content: "";
+  background-image: url("../assets/magnifyingGlass.png");
+  background-size: 14rem 15rem;
+  background-repeat: no-repeat;
+  width: 14.5rem;
+  height: 14.5rem;
+  display: inline-block;
+  position: relative;
+  left: 21.7rem;
+  top: 3rem;
+  z-index: 10;
+}
+
+h1::after {
+  content: "";
+  background-image: url("../assets/lamp.png");
+  background-size: 10rem 21rem;
+  background-repeat: no-repeat;
+  width: 14.5rem;
+  height: 20.5rem;
+  display: inline-block;
+  position: relative;
+}
+
+.notSo {
+  position: relative;
+  bottom: 3.5rem;
+}
+
+.trivial {
+  position: relative;
+}
+
+.trivial::after {
+  content: "";
+  background-image: url("../assets/squiggle.png");
+  background-size: 25rem 7rem;
+  background-repeat: no-repeat;
+  width: 24rem;
+  height: 8rem;
+  display: inline-block;
+  position: absolute;
+  top: 8rem;
+  right: -1.5rem;
+}
+
+.pursuit {
+  position: relative;
+}
+
+.pursuit::before {
+  content: "";
+  background-image: url("../assets/lightbulb.png");
+  background-size: 8rem 7rem;
+  background-repeat: no-repeat;
+  width: 24rem;
+  height: 8rem;
+  display: inline-block;
+  position: absolute;
+  top: -6rem;
+  left: 7rem;
+  transform: rotate(-20deg);
+}

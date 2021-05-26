@@ -1,0 +1,19 @@
+/* Footer Styles */
+
+footer {
+  font-size: 1.8rem;
+  position: relative;
+  top: 30rem;
+  text-align: center;
+  z-index: 15;
+  color: #fff;
+  padding-top: 20rem;
+  a {
+    color: #fff;
+  }
+}
+
+.wave {
+  width: 100vw;
+  z-index: 10;
+}
