@@ -66,21 +66,17 @@ function App() {
             progress: quizCount,
             quizLength: res.data.results.length,
             key: `quiz-${index}`,
-            question: res.data.results[index].question
-              .replace(/&quot;/g, `"`)
-              .replace(/&#039;/g, `'`),
-            correctAnswer: res.data.results[index].correct_answer
-              .replace(/&quot;/g, `"`)
-              .replace(/&#039;/g, `'`),
-            wrongAnswer1: res.data.results[index].incorrect_answers[0]
-              .replace(/&quot;/g, `"`)
-              .replace(/&#039;/g, `'`),
-            wrongAnswer2: res.data.results[index].incorrect_answers[1]
-              .replace(/&quot;/g, `"`)
-              .replace(/&#039;/g, `'`),
-            wrongAnswer3: res.data.results[index].incorrect_answers[2]
-              .replace(/&quot;/g, `"`)
-              .replace(/&#039;/g, `'`),
+            question: unicodeReplacer(res.data.results[index].question),
+            correctAnswer: unicodeReplacer(
+              res.data.results[index].correct_answer
+            ),
+            wrongAnswer1: unicodeReplacer(
+              res.data.results[index].incorrect_answers[0]
+            ),
+            wrongAnswer2: unicodeReplacer(
+              res.data.results[index].incorrect_answers[1]),
+            wrongAnswer3: unicodeReplacer(
+              res.data.results[index].incorrect_answers[2]),
           };
         });
 
@@ -103,6 +99,9 @@ function App() {
         // newQuizArray.push("progress");
         // newQuizArray.push("score");
         console.log(newQuizArray);
+        newQuizArray.progress = 0;
+        newQuizArray.score = 0;
+        
 
         setQuizArray(newQuizArray);
 
@@ -136,6 +135,10 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userName]);
 
+  const unicodeReplacer = (string) => {
+    return string.replace(/&quot;/g, `"`).replace(/&#039;/g, `'`)
+  }
+
   const handleCategory = (event) => {
     // console.log(event.target.value);
     let categoryValue = parseInt(event.target.value);
@@ -158,6 +161,7 @@ function App() {
     event.preventDefault();
     // displayTrivia
     dbRef.push(quizArray);
+
     console.log(quizArray);
     console.log("we have clicked");
     setDisplayTrivia(true);
@@ -171,16 +175,15 @@ function App() {
   };
   const handleAnswerChoice = (event, quizLength, userSavedName) => {
     console.log(event);
-    console.log(quizLength);
-    console.log(userSavedName);
-    //EVENT.TARGET.CLASSNAME DOESNT WORK
+    const buttonClassName = event.target.className;
+    console.log(buttonClassName);
 
     if (quizCount === quizLength - 1) {
-      if (event.target.className === "correct") {
+      if (buttonClassName === "correct") {
         //SHOW CORRECT ANIMATION HERE?
         setQuizScore(quizScore + 1);
         setQuizCount(quizCount + 1);
-         
+        
         endGame(userSavedName);
       } else {
         //SHOW INCORRECT ANIMATION HERE?
@@ -188,7 +191,7 @@ function App() {
         endGame(userSavedName);
       }
     } else {
-      if (event.target.className === "correct") {
+      if (buttonClassName === "correct") {
         //SHOW CORRECT ANIMATION HERE?
         setQuizScore(quizScore + 1);
         setQuizCount(quizCount + 1);

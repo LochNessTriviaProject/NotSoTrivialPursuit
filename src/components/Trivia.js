@@ -170,16 +170,36 @@ const Trivia = ({
           {/* also how do we hook up these buttons to randomized options? should we just move the buttons inside those li? but then CSS might be bit tricky*/}
 
           <div className="buttonsContainer">
-            <button className="wrong" onClick={()=>{handleAnswerChoice(quizLength, userSavedName)}}>
+            <button
+              className="wrong"
+              onClick={(event) => {
+                handleAnswerChoice(event, quizLength, userSavedName);
+              }}
+            >
               A
             </button>
-            <button className="wrong" onClick={()=>{handleAnswerChoice(quizLength, userSavedName)}}>
+            <button
+              className="wrong"
+              onClick={(event) => {
+                handleAnswerChoice(event, quizLength, userSavedName);
+              }}
+            >
               B
             </button>
-            <button className="wrong" onClick={()=>{handleAnswerChoice(quizLength, userSavedName)}}>
+            <button
+              className="wrong"
+              onClick={(event) => {
+                handleAnswerChoice(event, quizLength, userSavedName);
+              }}
+            >
               C
             </button>
-            <button className="correct" onClick={()=>{handleAnswerChoice(quizLength, userSavedName)}}>
+            <button
+              className="correct"
+              onClick={(event) => {
+                handleAnswerChoice(event, quizLength, userSavedName);
+              }}
+            >
               D
             </button>
           </div>
