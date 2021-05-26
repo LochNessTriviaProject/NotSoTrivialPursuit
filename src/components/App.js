@@ -56,22 +56,52 @@ function App() {
         const quizObjArray = res.data.results;
 
         console.log(quizObjArray);
-        let re = /(&quot;)|(&#039;)/gi;
+        // let re = /(&quot;)|(&#039;)/gi;
+        // const doubleQuote = `"`;
         
         const newQuizArray = res.data.results.map((quiz, index) => {
-          console.log(re);
+          console.log(res.data.results.length);
           return {
             name: userName,
             progress: quizCount,
+            quizLength: res.data.results.length,
             key: `quiz-${index}`,
-            question: res.data.results[index].question.replace(re, "'"),
-            correctAnswer: res.data.results[index].correct_answer.replace(re, "'"),
-            wrongAnswer1: res.data.results[index].incorrect_answers[0].replace(re, "'"),
-            wrongAnswer2: res.data.results[index].incorrect_answers[1].replace(re, "'"),
-            wrongAnswer3: res.data.results[index].incorrect_answers[2].replace(re, "'"),
+            question: res.data.results[index].question
+              .replace(/&quot;/g, `"`)
+              .replace(/&#039;/g, `'`),
+            correctAnswer: res.data.results[index].correct_answer
+              .replace(/&quot;/g, `"`)
+              .replace(/&#039;/g, `'`),
+            wrongAnswer1: res.data.results[index].incorrect_answers[0]
+              .replace(/&quot;/g, `"`)
+              .replace(/&#039;/g, `'`),
+            wrongAnswer2: res.data.results[index].incorrect_answers[1]
+              .replace(/&quot;/g, `"`)
+              .replace(/&#039;/g, `'`),
+            wrongAnswer3: res.data.results[index].incorrect_answers[2]
+              .replace(/&quot;/g, `"`)
+              .replace(/&#039;/g, `'`),
           };
         });
 
+        
+
+        // newQuizArray.map((quiz)=> {
+        //   console.log(quiz);
+        //   console.log(quiz.question);
+        //   return (
+        //     {
+        //       name: quiz.name,
+        //       question: quiz.question
+        //     }
+        //   )
+        // })
+
+
+
+        console.log(newQuizArray);
+        // newQuizArray.push("progress");
+        // newQuizArray.push("score");
         console.log(newQuizArray);
 
         setQuizArray(newQuizArray);
@@ -139,16 +169,33 @@ function App() {
     let userNameValue = event.target.value;
     setUserName(userNameValue);
   };
-  const handleAnswerChoice = (event) => {
-    // console.log(event.target);
+  const handleAnswerChoice = (event, quizLength, userSavedName) => {
+    console.log(event);
+    console.log(quizLength);
+    console.log(userSavedName);
+    //EVENT.TARGET.CLASSNAME DOESNT WORK
 
-    if (event.target.className === "correct") {
-      //SHOW CORRECT ANIMATION HERE?
-      setQuizScore(quizScore + 1);
-      setQuizCount(quizCount + 1);
+    if (quizCount === quizLength - 1) {
+      if (event.target.className === "correct") {
+        //SHOW CORRECT ANIMATION HERE?
+        setQuizScore(quizScore + 1);
+        setQuizCount(quizCount + 1);
+         
+        endGame(userSavedName);
+      } else {
+        //SHOW INCORRECT ANIMATION HERE?
+        setQuizCount(quizCount + 1);
+        endGame(userSavedName);
+      }
     } else {
-      //SHOW INCORRECT ANIMATION HERE?
-      setQuizCount(quizCount + 1);
+      if (event.target.className === "correct") {
+        //SHOW CORRECT ANIMATION HERE?
+        setQuizScore(quizScore + 1);
+        setQuizCount(quizCount + 1);
+      } else {
+        //SHOW INCORRECT ANIMATION HERE?
+        setQuizCount(quizCount + 1);
+      }
     }
   };
 
@@ -168,7 +215,7 @@ function App() {
         // console.log("data", data);
         // console.log("key is here", key);
         for (let i = 0; i < (counter-2); i++) {
-          console.log(data[key]);
+          // console.log(data[key]);
           let searchObj = {
             key: key,
             name: data[key][i].name,
@@ -187,15 +234,12 @@ function App() {
           newDataArray.unshift(searchObj);
         }
 
-        console.log(newDataArray);
       }
 
-      console.log(newDataArray);
-      console.log(savedUserName);
+
 
       updatedArray = newDataArray.filter((user) => {
-        console.log(user);
-        console.log(user.name);
+
         return user.name == savedUserName;
       });
 
@@ -204,16 +248,27 @@ function App() {
     });
         console.log(updatedArray);
         // console.log(updatedArray.key);
+        
+        
         const savedDbRef = firebase.database().ref(updatedArray[0].key);
-
+        
+        
+        
+        // console.log(savedDbRef);
+        // console.log(savedDbRef[0]);
+        
+        
+        
         const data = {
           progress: quizCount,
           score: quizScore,
         };
 
         savedDbRef.update(data);
+        //BECAUSE OF THIS and OBJECT.KEY -2, we only will get 8 questions when user forcefully exits our game!
         setResumeData(updatedArray);
         setQuizScore(0);
+        
 
     // After hiding modal, update the progress (quizCount)!
     // dbRef.push()? dbRef.update()?
