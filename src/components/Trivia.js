@@ -16,8 +16,10 @@ const Trivia = ({
   // Display question and multiple choice answers in modal. Once user selects an answer, run logic to determine if correct and play animation accordingly. Then the modal updates to the next question and so on, until the user completes the set of questions or clicks "save for later"
   const randoIndex = Math.floor(Math.random() * 4);
   console.log("random", randoIndex);
-  console.log(quizArray);
-  console.log(quizCount);
+  let quizLength = quizArray[0].quizLength;
+  let userSavedName = quizArray[0].name;
+  console.log(quizArray[0].quizLength);
+
   // const userNameForProgress = quizArray[0].name;
 
   if (randoIndex === 0) {
@@ -36,21 +38,21 @@ const Trivia = ({
           {/* also how do we hook up these buttons to randomized options? should we just move the buttons inside those li? but then CSS might be bit tricky*/}
 
           <div className="buttonsContainer">
-            <button className="correct" onClick={handleAnswerChoice}>
+            <button className="correct" onClick={(event)=>{handleAnswerChoice(event, quizLength, userSavedName);}}>
               A
             </button>
-            <button className="wrong" onClick={handleAnswerChoice}>
+            <button className="wrong" onClick={(event)=>{handleAnswerChoice(event, quizLength, userSavedName);}}>
               B
             </button>
-            <button className="wrong" onClick={handleAnswerChoice}>
+            <button className="wrong" onClick={(event)=>{handleAnswerChoice(event, quizLength, userSavedName);}}>
               C
             </button>
-            <button className="wrong" onClick={handleAnswerChoice}>
+            <button className="wrong" onClick={(event)=>{handleAnswerChoice(event, quizLength, userSavedName);}}>
               D
             </button>
           </div>
           <p>quiz score = {quizScore}</p>
-          <button onClick={()=>{endGame(quizArray[0].name)}}>
+          <button onClick={()=>{endGame(userSavedName);}}>
             <span className="srOnly">Close trivia game</span>
             <FontAwesomeIcon icon={faTimes} aria-hidden="true" />
           </button>
@@ -73,23 +75,23 @@ const Trivia = ({
           {/* also how do we hook up these buttons to randomized options? should we just move the buttons inside those li? but then CSS might be bit tricky*/}
 
           <div className="buttonsContainer">
-            <button className="wrong" onClick={handleAnswerChoice}>
+            <button className="wrong" onClick={(event)=>{handleAnswerChoice(event, quizLength, userSavedName);}}>
               A
             </button>
-            <button className="correct" onClick={handleAnswerChoice}>
+            <button className="correct" onClick={(event)=>{handleAnswerChoice(event, quizLength, userSavedName);}}>
               B
             </button>
-            <button className="wrong" onClick={handleAnswerChoice}>
+            <button className="wrong" onClick={(event)=>{handleAnswerChoice(event, quizLength, userSavedName);}}>
               C
             </button>
-            <button className="wrong" onClick={handleAnswerChoice}>
+            <button className="wrong" onClick={(event)=>{handleAnswerChoice(event, quizLength, userSavedName);}}>
               D
             </button>
           </div>
           <p>quiz score = {quizScore}</p>
           <button
             onClick={() => {
-              endGame(quizArray[0].name);
+              endGame(userSavedName);
             }}
           >
             <span className="srOnly">Close trivia game</span>
@@ -114,23 +116,23 @@ const Trivia = ({
           {/* also how do we hook up these buttons to randomized options? should we just move the buttons inside those li? but then CSS might be bit tricky*/}
 
           <div className="buttonsContainer">
-            <button className="wrong" onClick={handleAnswerChoice}>
+            <button className="wrong" onClick={(event)=>{handleAnswerChoice(event, quizLength, userSavedName);}}>
               A
             </button>
-            <button className="wrong" onClick={handleAnswerChoice}>
+            <button className="wrong" onClick={(event)=>{handleAnswerChoice(event, quizLength, userSavedName);}}>
               B
             </button>
-            <button className="correct" onClick={handleAnswerChoice}>
+            <button className="correct" onClick={(event)=>{handleAnswerChoice(event, quizLength, userSavedName);}}>
               C
             </button>
-            <button className="wrong" onClick={handleAnswerChoice}>
+            <button className="wrong" onClick={(event)=>{handleAnswerChoice(event, quizLength, userSavedName);}}>
               D
             </button>
           </div>
           <p>quiz score = {quizScore}</p>
           <button
             onClick={() => {
-              endGame(quizArray[0].name);
+              endGame(userSavedName);
             }}
           >
             <span className="srOnly">Close trivia game</span>
@@ -155,23 +157,23 @@ const Trivia = ({
           {/* also how do we hook up these buttons to randomized options? should we just move the buttons inside those li? but then CSS might be bit tricky*/}
 
           <div className="buttonsContainer">
-            <button className="wrong" onClick={handleAnswerChoice}>
+            <button className="wrong" onClick={()=>{handleAnswerChoice(quizLength, userSavedName)}}>
               A
             </button>
-            <button className="wrong" onClick={handleAnswerChoice}>
+            <button className="wrong" onClick={()=>{handleAnswerChoice(quizLength, userSavedName)}}>
               B
             </button>
-            <button className="wrong" onClick={handleAnswerChoice}>
+            <button className="wrong" onClick={()=>{handleAnswerChoice(quizLength, userSavedName)}}>
               C
             </button>
-            <button className="correct" onClick={handleAnswerChoice}>
+            <button className="correct" onClick={()=>{handleAnswerChoice(quizLength, userSavedName)}}>
               D
             </button>
           </div>
           <p>quiz score = {quizScore}</p>
           <button
             onClick={() => {
-              endGame(quizArray[0].name);
+              endGame(userSavedName);
             }}
           >
             <span className="srOnly">Close trivia game</span>
