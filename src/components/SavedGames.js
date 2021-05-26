@@ -5,63 +5,71 @@ import firebase from "../config/firebase";
 
 // Clicking on a saved game will pop up a modal with the current question displaying
 
-
-// In progress games will show at at the top, with some indicator that they are still ongoing, completed games will show up at the bottom with the score displayed. 
-
-
+// In progress games will show at at the top, with some indicator that they are still ongoing, completed games will show up at the bottom with the score displayed.
 
 const SavedGames = ({ userData, resumeGame }) => {
-    console.log(userData);
-  
-    const dbRef = firebase.database().ref();
-const newDataArray = [];
+  console.log(userData);
+
+  const dbRef = firebase.database().ref();
+  const newDataArray = [];
   dbRef.on("value", (res) => {
-    
     const data = res.val();
 
     for (let key in data) {
       let searchObj = {
-          key: key,
-          name: data[key][0].name,
-          progress: data[key].progress,
-          score: data[key].score
-      }
+        key: key,
+        name: data[key][0].name,
+        progress: data[key].progress,
+        score: data[key].score,
+      };
       newDataArray.unshift(searchObj);
     }
-
   });
-    return (
-        <>
-            <div className="wrapper">
-                <h2>Saved Games:</h2>
-                <ul className="savedGames">
-                    {
-
-                        newDataArray.map((user) => {
-                            console.log(user);
-                            return (
-                                <>
-                                                   {user.score ? (
-                  <li>
-                                        <button onClick={() => { resumeGame(user.name) }} className={user.name}><span>Name:</span> {user.name} | <span>Progress:</span> {user.progress}/10 questions Score: user.score</button></li>
-                ) : (
-                  
-                  <li>
-                                        <button onClick={() => { resumeGame(user.name) }} className={user.name}><span>Name:</span> {user.name} | <span>Progress:</span> 0/10 questions Score: 0</button></li>
-                  
-
-                )}
-                                </>
-                            )
-
-                        })
-                    }
-
-                </ul>
-            </div>
-        </>
-    )
-}
+  return (
+    <>
+      <div className="wrapper">
+        <div className="flexContainer">
+          <h2>Saved Games:</h2>
+        </div>
+        <container className="gamesContainer">
+          <ul className="savedGames">
+            {newDataArray.map((user) => {
+              console.log(user);
+              return (
+                <>
+                  {user.score ? (
+                    <li>
+                      <button
+                        onClick={() => {
+                          resumeGame(user.name);
+                        }}
+                        className={user.name}
+                      >
+                        <span>Name:</span> {user.name} | <span>Progress:</span>{" "}
+                        {user.progress}/10 questions Score: user.score
+                      </button>
+                    </li>
+                  ) : (
+                    <li>
+                      <button
+                        onClick={() => {
+                          resumeGame(user.name);
+                        }}
+                        className={user.name}
+                      >
+                        <span>Name:</span> {user.name} | <span>Progress:</span>{" "}
+                        0/10 questions Score: 0
+                      </button>
+                    </li>
+                  )}
+                </>
+              );
+            })}
+          </ul>
+        </container>
+      </div>
+    </>
+  );
+};
 
 export default SavedGames;
-
