@@ -6,14 +6,16 @@ footer {
   top: 30rem;
   text-align: center;
   z-index: 15;
-  color: #fff;
-  padding-top: 20rem;
+  // color: #fff;
+  // padding-top: 20rem;
+  padding: 1rem 0;
+  background: #d26121;
   a {
-    color: #fff;
+    color: #000;
   }
 }
 
-.wave {
-  width: 100vw;
-  z-index: 10;
-}
+// .wave {
+//   width: 100vw;
+//   z-index: 10;
+// }

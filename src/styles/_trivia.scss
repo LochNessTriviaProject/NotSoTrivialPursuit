@@ -18,7 +18,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 4.5rem 3rem 3rem;
+  padding: 7rem 3rem 3rem;
   position: relative;
   background: transparent;
   color: #000;
@@ -28,15 +28,19 @@
     width: 110%;
     min-width: 100rem;
   }
-  p {
-    padding: 0 3rem;
+  .score {
+    background: #fff8f3;
+    border-radius: 0.5rem;
+    padding: 1rem 1.2rem;
   }
 }
 
 .triviaContent {
-  background-color: white;
+  background-color: #fff8f3;
   border-radius: 0.5rem;
   margin: 3.5rem;
+  width: 80%;
+  padding: 2rem 0;
 }
 
 .wrong,
@@ -47,15 +51,17 @@
   font-size: 3rem;
   margin: 2rem 1rem;
   cursor: pointer;
-  background-color: #fff8f3;
+  background-color: #ffe500;
   transition: all 0.3s ease;
-  &:hover, &:focus {
-    background-color: #ffe500;
+  &:hover,
+  &:focus {
+    background-color: #fff8f3;
   }
 }
 
 .answersContainer {
   display: flex;
+  justify-content: center;
 }
 
 .answersContainer li {
@@ -69,9 +75,11 @@
   font-size: 5rem;
   cursor: pointer;
   position: relative;
-  bottom: 460px;
-  right: -259px;
-  &:hover, &:focus {
+  bottom: 490px;
+  right: -260px;
+  transition: all 0.3s ease;
+  &:hover,
+  &:focus {
     color: #fff8f3;
   }
 }
