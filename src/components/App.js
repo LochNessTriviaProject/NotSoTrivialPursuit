@@ -95,10 +95,6 @@ function App() {
 
 
 
-        console.log(newQuizArray);
-        // newQuizArray.push("progress");
-        // newQuizArray.push("score");
-        console.log(newQuizArray);
         newQuizArray.progress = 0;
         newQuizArray.score = 0;
         
@@ -116,14 +112,11 @@ function App() {
               name: data[key][0].name,
               progress: data[key][0].progress,
             };
-            console.log("key", key);
-            console.log(searchObj);
             newDataArray.unshift(searchObj);
           }
 
           setUserData(newDataArray);
-          console.log(newDataArray);
-          console.log(userData);
+
         });
       } else {
         alert("no dice pal");
@@ -162,21 +155,19 @@ function App() {
     // displayTrivia
     dbRef.push(quizArray);
 
-    console.log(quizArray);
-    console.log("we have clicked");
+
     setDisplayTrivia(true);
+
+
+
   };
 
   const handleUserName = (event) => {
-    // console.log(event.target.value);
-    // console.log(event);
     let userNameValue = event.target.value;
     setUserName(userNameValue);
   };
   const handleAnswerChoice = (event, quizLength, userSavedName) => {
-    console.log(event);
     const buttonClassName = event.target.className;
-    console.log(buttonClassName);
 
     if (quizCount === quizLength - 1) {
       if (buttonClassName === "correct") {
@@ -212,53 +203,32 @@ function App() {
       const data = res.val();
       
       for (let key in data) {
-        
         const counter = Object.keys(data[key]).length;
-        console.log(counter);
-        // console.log("data", data);
-        // console.log("key is here", key);
         for (let i = 0; i < (counter-2); i++) {
-          // console.log(data[key]);
           let searchObj = {
             key: key,
             name: data[key][i].name,
-            // progress: quizCount,
-            // score: quizScore,
             question: data[key][i].question,
             correctAnswer: data[key][i].correctAnswer,
             wrongAnswer1: data[key][i].wrongAnswer1,
             wrongAnswer2: data[key][i].wrongAnswer2,
             wrongAnswer3: data[key][i].wrongAnswer3,
           };
-          
-          // console.log("key", key);
-          // console.log(searchObj);
-          // console.log(data[key][i]);
+
           newDataArray.unshift(searchObj);
         }
 
       }
-
-
-
       updatedArray = newDataArray.filter((user) => {
 
         return user.name == savedUserName;
       });
 
-      console.log(updatedArray);
-
     });
-        console.log(updatedArray);
-        // console.log(updatedArray.key);
-        
+
         
         const savedDbRef = firebase.database().ref(updatedArray[0].key);
         
-        
-        
-        // console.log(savedDbRef);
-        // console.log(savedDbRef[0]);
         
         
         
@@ -266,32 +236,11 @@ function App() {
           progress: quizCount,
           score: quizScore,
         };
+        console.log(data);
 
         savedDbRef.update(data);
-        //BECAUSE OF THIS and OBJECT.KEY -2, we only will get 8 questions when user forcefully exits our game!
         setResumeData(updatedArray);
         setQuizScore(0);
-        
-
-    // After hiding modal, update the progress (quizCount)!
-    // dbRef.push()? dbRef.update()?
-
-    //savedQuizArray[0].key KEY
-    
-    
-    // savedDbRef.on('value', (res)=>{
-    //   const data = res.val();
-    //   console.log(data);
-    // })
-
-    // let updates = {};
-    // updates
-
-    //  var updates = {};
-    //  updates["/posts/" + newPostKey] = postData;
-    //  updates["/user-posts/" + uid + "/" + newPostKey] = postData;
-
-    //  return firebase.database().ref().update(updates);
   };
 
   const resumeGame = (savedUserName) => {
@@ -302,10 +251,6 @@ function App() {
       console.log("data", data);
 
               for (let key in data) {
-                console.log(data[key]);
-                console.log(Object.keys(data[key]));
-                console.log(Object.keys(data[key]).length-2);
-                console.log(data[key][0]);
 
                   for (let i=0; i<Object.keys(data[key]).length-2;i++){
                     let searchObj = {
@@ -318,20 +263,12 @@ function App() {
                       wrongAnswer2: data[key][i].wrongAnswer2,
                       wrongAnswer3: data[key][i].wrongAnswer3,
                     };
-
-                    // console.log(data[key]);
-                    // console.log("key", key);
-                    // console.log(searchObj);
-                    // console.log(data[key][i]);
                     newDataArray.unshift(searchObj);
                   }
-                console.log(newDataArray);
               }
               console.log("newdataArray", newDataArray);
 
       const updatedArray = newDataArray.filter((user) => {
-        console.log(user);
-        console.log(user.name);
         return user.name === savedUserName;
       });
 
