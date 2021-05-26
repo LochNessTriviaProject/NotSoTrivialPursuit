@@ -63,7 +63,6 @@ function App() {
           console.log(res.data.results.length);
           return {
             name: userName,
-            progress: quizCount,
             quizLength: res.data.results.length,
             key: `quiz-${index}`,
             question: unicodeReplacer(res.data.results[index].question),
@@ -129,7 +128,10 @@ function App() {
   }, [userName]);
 
   const unicodeReplacer = (string) => {
-    return string.replace(/&quot;/g, `"`).replace(/&#039;/g, `'`)
+    return string
+      .replace(/&quot;/g, `"`)
+      .replace(/&#039;/g, `'`)
+      .replace(/&ouml;/g, "ö");
   }
 
   const handleCategory = (event) => {
@@ -173,12 +175,11 @@ function App() {
       if (buttonClassName === "correct") {
         //SHOW CORRECT ANIMATION HERE?
         setQuizScore(quizScore + 1);
-        setQuizCount(quizCount + 1);
-        
+        console.log(quizCount);
         endGame(userSavedName);
       } else {
         //SHOW INCORRECT ANIMATION HERE?
-        setQuizCount(quizCount + 1);
+        console.log(quizCount);
         endGame(userSavedName);
       }
     } else {
@@ -186,9 +187,11 @@ function App() {
         //SHOW CORRECT ANIMATION HERE?
         setQuizScore(quizScore + 1);
         setQuizCount(quizCount + 1);
+        console.log(quizCount);
       } else {
         //SHOW INCORRECT ANIMATION HERE?
         setQuizCount(quizCount + 1);
+        console.log(quizCount);
       }
     }
   };
@@ -215,7 +218,7 @@ function App() {
             wrongAnswer3: data[key][i].wrongAnswer3,
           };
 
-          newDataArray.unshift(searchObj);
+          newDataArray.push(searchObj);
         }
 
       }
@@ -243,7 +246,9 @@ function App() {
         setQuizScore(0);
   };
 
-  const resumeGame = (savedUserName) => {
+  const resumeGame = (savedUserKey) => {
+
+
 
     dbRef.on("value", (res) => {
       const newDataArray = [];
@@ -256,25 +261,28 @@ function App() {
                     let searchObj = {
                       key: key,
                       name: data[key][i].name,
-                      progress: data[key][i].progress,
+                      progress: data[key].progress,
+                      score: data[key].score,
                       question: data[key][i].question,
                       correctAnswer: data[key][i].correctAnswer,
                       wrongAnswer1: data[key][i].wrongAnswer1,
                       wrongAnswer2: data[key][i].wrongAnswer2,
                       wrongAnswer3: data[key][i].wrongAnswer3,
                     };
-                    newDataArray.unshift(searchObj);
+                    newDataArray.push(searchObj);
                   }
               }
               console.log("newdataArray", newDataArray);
 
       const updatedArray = newDataArray.filter((user) => {
-        return user.name === savedUserName;
+        return user.key === savedUserKey;
       });
 
       console.log("what", updatedArray);
 
       setSavedQuizArray(updatedArray);
+      setQuizCount(updatedArray[0].progress);
+      setQuizScore(updatedArray[0].score);
       setSavedGame(true);
     });
 

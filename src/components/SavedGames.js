@@ -35,14 +35,13 @@ const SavedGames = ({ userData, resumeGame }) => {
         <h2>Saved Games:</h2>
         <ul className="savedGames">
           {newDataArray.map((user) => {
-            console.log(user);
             return (
               <>
                 {user.score ? (
                   <li>
                     <button
                       onClick={() => {
-                        resumeGame(user.name);
+                        resumeGame(user.key);
                       }}
                       className={user.name}
                     >
@@ -54,7 +53,7 @@ const SavedGames = ({ userData, resumeGame }) => {
                   <li>
                     <button
                       onClick={() => {
-                        resumeGame(user.name);
+                        resumeGame(user.key);
                       }}
                       className={user.name}
                     >

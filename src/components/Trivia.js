@@ -18,20 +18,26 @@ const Trivia = ({
   const randoIndex = Math.floor(Math.random() * 4);
   console.log("random", randoIndex);
 
+
   let quizLength = quizArray[0].quizLength;
   let userSavedName = quizArray[0].name;
   console.log(quizArray[0].quizLength);
   let savedProgress = quizArray[0].progress;
+  let savedScore = quizArray[0].score;
   if(!savedProgress){
     savedProgress = 0
   }
 
-    const [savedQuizCount, setSavedQuizCount] = useState(savedProgress);
-    setSavedQuizCount(savedProgress);
+  console.log(quizArray);
+  console.log(quizCount);
 
-    useEffect(() => {
-      setSavedQuizCount(quizCount);
-    }, [quizCount]);
+
+    // const [savedQuizCount, setSavedQuizCount] = useState(savedProgress);
+    // setSavedQuizCount(savedProgress);
+
+    // useEffect(() => {
+    //   setSavedQuizCount(quizCount);
+    // }, [quizCount]);
 
   // const userNameForProgress = quizArray[0].name;
 
