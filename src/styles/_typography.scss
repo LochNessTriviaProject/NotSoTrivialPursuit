@@ -1,0 +1,84 @@
+// Typography styles
+
+html {
+  background-color: $beige;
+  font-size: 62.5%;
+}
+
+body {
+  font-family: $lato;
+  font-size: 2rem;
+}
+
+h1 {
+  font-family: $caveat;
+  font-size: 8rem;
+  margin: -1rem 0 0;
+  color: $darkPurple;
+  font-weight: normal;
+  text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 3.5rem;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  color: $black;
+  text-decoration: none;
+  &:hover,
+  &:focus {
+    text-decoration: underline;
+  }
+}
+
+form {
+  text-transform: uppercase;
+  align-items: center;
+  fieldset {
+    text-align: center;
+  }
+}
+
+select,
+input,
+button {
+  font-family: $lato;
+  font-size: 2rem;
+}
+
+.savedGames span {
+  text-transform: uppercase;
+}
+
+.answersContainer li {
+  margin: 2rem;
+}
+
+.wrong,
+.correct {
+  font-family: $caveat;
+  font-size: 3rem;
+}
+
+.exitButton {
+  font-size: 5rem;
+  &:hover,
+  &:focus {
+    color: $beige;
+  }
+}
+
+footer {
+  font-size: 1.8rem;
+  color: $white;
+  a {
+    color: white;
+  }
+}

@@ -54,7 +54,7 @@ const Trivia = ({
               D
             </button>
           </div>
-          <p>quiz score = {quizScore}</p>
+          <p className="score">Score = {quizScore}</p>
 
           <button className="exitButton" onClick={()=>{endGame(userSavedName);}}>
             
@@ -95,7 +95,7 @@ const Trivia = ({
               D
             </button>
           </div>
-          <p>quiz score = {quizScore}</p>
+          <p className="score">Score = {quizScore}</p>
           <button
             className="exitButton"
             onClick={() => {
@@ -139,7 +139,7 @@ const Trivia = ({
               D
             </button>
           </div>
-          <p>quiz score = {quizScore}</p>
+          <p className="score">Score = {quizScore}</p>
           <button
             className="exitButton"
             onClick={() => {
@@ -183,7 +183,7 @@ const Trivia = ({
               D
             </button>
           </div>
-          <p>quiz score = {quizScore}</p>
+          <p className="score">Score = {quizScore}</p>
           <button
             className="exitButton"
             onClick={() => {
