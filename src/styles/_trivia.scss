@@ -9,7 +9,7 @@
   z-index: 20;
   width: 100%;
   height: 100%;
-  background: #530e1a80;
+  background: #530e1ab3;
 }
 
 .modalContent {
@@ -21,7 +21,6 @@
   padding: 7rem 3rem 3rem;
   position: relative;
   background: transparent;
-  color: #000;
   img {
     position: absolute;
     z-index: -1;
@@ -29,18 +28,18 @@
     min-width: 100rem;
   }
   .score {
-    background: #fff8f3;
+    background: $beige;
     border-radius: 0.5rem;
     padding: 1rem 1.2rem;
   }
 }
 
 .triviaContent {
-  background-color: #fff8f3;
+  background-color: $beige;
   border-radius: 0.5rem;
   margin: 3.5rem;
   width: 80%;
-  padding: 2rem 0;
+  padding: 2rem;
 }
 
 .wrong,
@@ -48,14 +47,13 @@
   border: none;
   border-radius: 50%;
   padding: 2rem 3rem;
-  font-size: 3rem;
   margin: 2rem 1rem;
   cursor: pointer;
-  background-color: #ffe500;
+  background-color: $yellow;
   transition: all 0.3s ease;
   &:hover,
   &:focus {
-    background-color: #fff8f3;
+    background-color: $beige;
   }
 }
 
@@ -64,22 +62,12 @@
   justify-content: center;
 }
 
-.answersContainer li {
-  margin: 2rem;
-  list-style: none;
-}
-
 .exitButton {
   background: none;
   border: none;
-  font-size: 5rem;
   cursor: pointer;
   position: relative;
   bottom: 490px;
   right: -260px;
   transition: all 0.3s ease;
-  &:hover,
-  &:focus {
-    color: #fff8f3;
-  }
 }

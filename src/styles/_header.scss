@@ -6,14 +6,6 @@ header .wrapper {
   justify-content: center;
 }
 
-h1 {
-  font-size: 8rem;
-  margin: -1rem 0 0;
-  color: #550e1b;
-  font-weight: normal;
-  text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
-}
-
 h1::before {
   content: "";
   background-image: url("../assets/magnifyingGlass.png");

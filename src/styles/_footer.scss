@@ -1,7 +1,6 @@
 /* Footer Styles */
 
 footer {
-  font-size: 1.8rem;
   position: relative;
   top: 30rem;
   text-align: center;
@@ -9,10 +8,7 @@ footer {
   // color: #fff;
   // padding-top: 20rem;
   padding: 1rem 0;
-  background: #d26121;
-  a {
-    color: #000;
-  }
+  background: $orange;
 }
 
 // .wave {
