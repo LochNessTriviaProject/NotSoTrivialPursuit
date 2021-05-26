@@ -1,0 +1,70 @@
+@media (max-width: 1023px) {
+  header .wrapper {
+    padding: 0;
+    height: 40rem;
+  }
+  h1 {
+    margin: 6rem 0;
+    width: 50rem;
+    line-height: 3rem;
+    text-align: center;
+  }
+  h1::before {
+    transform: rotate(180deg);
+    left: 13.4rem;
+    top: 0;
+  }
+  h1::after {
+    bottom: 25rem;
+    right: 14rem;
+  }
+  .notSo {
+    right: 9.5rem;
+  }
+  .trivial::after {
+    right: -2rem;
+  }
+  fieldset {
+    flex-direction: column;
+    align-items: center;
+    margin: 2rem 0;
+  }
+  select {
+    margin: 1rem 0;
+    width: 50rem;
+    background-size: 6%;
+  }
+  footer {
+    font-size: 1.6rem;
+    background-size: 150rem;
+  }
+}
+
+@media (max-width: 680px) {
+  .shapes {
+    width: 35rem;
+  }
+  h2 {
+    font-size: 2.5rem;
+    text-align: left;
+  }
+  h2::before {
+    background-size: 8rem 7rem;
+    top: 9rem;
+    right: -5rem;
+  }
+}
+
+@media (max-width: 540px) {
+  //   h1 {
+  //     font-size: 6rem;
+  //     line-height: 4rem;
+  //   }
+  .shapes {
+    width: 28rem;
+  }
+  select,
+  input {
+    width: 30rem;
+  }
+}

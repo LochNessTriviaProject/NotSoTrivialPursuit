@@ -2,13 +2,20 @@
 
 footer {
   position: relative;
-  top: 30rem;
+  z-index: 15;
+  // top: 30rem;
   text-align: center;
   z-index: 15;
-  // color: #fff;
   // padding-top: 20rem;
   padding: 1rem 0;
-  background: $orange;
+  // background: $orange;
+  background-image: url(../assets/wave.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 0 bottom;
+  height: 20rem;
+  display: flex;
+  align-items: flex-end;
 }
 
 // .wave {
