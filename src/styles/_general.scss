@@ -1,5 +1,9 @@
 /* General Styles */
 
+html {
+  overflow-x: hidden;
+}
+
 body {
   overflow-x: hidden;
 }
@@ -19,5 +23,5 @@ ul {
   position: fixed;
   bottom: -3rem;
   right: -3.5rem;
-  z-index: 5;
+  z-index: -1;
 }
