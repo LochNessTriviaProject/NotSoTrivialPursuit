@@ -8,7 +8,7 @@ import firebase from "../config/firebase";
 // In progress games will show at at the top, with some indicator that they are still ongoing, completed games will show up at the bottom with the score displayed.
 
 const SavedGames = ({ userData, resumeGame }) => {
-  console.log(userData);
+  // console.log(userData);
 
   const dbRef = firebase.database().ref();
   const newDataArray = [];
@@ -36,7 +36,7 @@ const SavedGames = ({ userData, resumeGame }) => {
         <container className="gamesContainer">
           <ul className="savedGames">
             {newDataArray.map((user, index) => {
-              console.log(user);
+              // console.log(user);
               return (
                 <>
                   {user.score ? (

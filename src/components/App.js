@@ -87,7 +87,7 @@ function App() {
           const newDataArray = [];
           const data = res.val();
 
-          console.log("data", data);
+          // console.log("data", data);
           for (let key in data) {
             let searchObj = {
               key: key,
@@ -147,9 +147,7 @@ function App() {
     event.preventDefault();
     // setSubmitted(!submitted);
     // displayTrivia
-
     //ERROR HANDLING FOR USER RE-CLICKING ON SUBMIT
-    
     
     dbRef.push(quizArray);
 
