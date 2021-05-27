@@ -1,4 +1,6 @@
 import firebase from "../config/firebase";
+import Swal from "sweetalert2";
+import "sweetalert2/src/sweetalert2.scss";
 
 const SavedGames = ({ resumeGame }) => {
   const dbRef = firebase.database().ref();
@@ -21,7 +23,14 @@ const SavedGames = ({ resumeGame }) => {
   });
 
   const completed = () => {
-    alert("this is already completed!");
+    Swal.fire({
+      title: "Uh oh",
+      text: "You can't resume a completed game!",
+      imageUrl:
+        "https://images.blush.design/UMepYocbuMn1l5E92vl7?w=920&auto=compress&cs=srgb",
+      imageWidth: 250,
+      imageAlt: "Custom image",
+    });
   };
 
   return (
@@ -43,16 +52,16 @@ const SavedGames = ({ resumeGame }) => {
                       user.completed
                         ? completed
                         : () => {
-                            resumeGame(user.key);
-                          }
+                          resumeGame(user.key);
+                        }
                     }
                     className={user.name}
                   >
                     <span>Name:</span> {user.name} | <span>category:</span>{" "}
                     {user.category} | <span>Progress:</span>{" "}
                     {user.score
-                      ? `${user.progress}/${user.quizLength} questions Score: ${user.score}`
-                      : `0/10 questions Score: 0`}
+                      ? `${user.progress}/${user.quizLength} questions | SCORE: ${user.score}`
+                      : `0/10 questions | SCORE: 0`}
                   </button>
                 </li>
               );
