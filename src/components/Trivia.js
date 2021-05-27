@@ -1,8 +1,9 @@
 // Import Fontawesome icon
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import blob from '../assets/blob.svg';
+import firebase from "../config/firebase";
 
 const Trivia = ({
   savedGame,
@@ -17,9 +18,28 @@ const Trivia = ({
   // Display question and multiple choice answers in modal. Once user selects an answer, run logic to determine if correct and play animation accordingly. Then the modal updates to the next question and so on, until the user completes the set of questions or clicks "save for later"
   const randoIndex = Math.floor(Math.random() * 4);
   console.log("random", randoIndex);
+
   let quizLength = quizArray[0].quizLength;
+  // let userSavedKey = quizArray.key;
+
   let userSavedName = quizArray[0].name;
   console.log(quizArray[0].quizLength);
+  let savedProgress = quizArray[0].progress;
+  let savedScore = quizArray[0].score;
+  if(!savedProgress){
+    savedProgress = 0
+  }
+
+  console.log(quizArray);
+  console.log(quizCount);
+
+
+    // const [savedQuizCount, setSavedQuizCount] = useState(savedProgress);
+    // setSavedQuizCount(savedProgress);
+
+    // useEffect(() => {
+    //   setSavedQuizCount(quizCount);
+    // }, [quizCount]);
 
   // const userNameForProgress = quizArray[0].name;
 

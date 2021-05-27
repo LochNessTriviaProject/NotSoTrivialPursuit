@@ -21,6 +21,8 @@ const SavedGames = ({ userData, resumeGame }) => {
         name: data[key][0].name,
         progress: data[key].progress,
         score: data[key].score,
+        category: data[key][0].category
+
       };
       newDataArray.unshift(searchObj);
     }
@@ -38,26 +40,28 @@ const SavedGames = ({ userData, resumeGame }) => {
               return (
                 <>
                   {user.score ? (
-                    <li>
+                    <li key={`${user.key}-${index}`}>
                       <button
                         onClick={() => {
                           resumeGame(user.name);
                         }}
                         className={user.name}
                       >
-                        <span>Name:</span> {user.name} | <span>Progress:</span>{" "}
+                        <span>Name:</span> {user.name} | category: {user.category}{" "}
+                      | <span>Progress:</span>{" "}
                         {user.progress}/10 questions Score: user.score
                       </button>
                     </li>
                   ) : (
-                    <li>
+                    <li key={`${user.key}-${index}`}>
                       <button
                         onClick={() => {
                           resumeGame(user.name);
                         }}
                         className={user.name}
                       >
-                        <span>Name:</span> {user.name} | <span>Progress:</span>{" "}
+                        <span>Name:</span> {user.name} | category: {user.category}{" "}
+                      | <span>Progress:</span>{" "}
                         0/10 questions Score: 0
                       </button>
                     </li>
