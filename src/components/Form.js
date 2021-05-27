@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
 const Form = ({
-  handleUserName,
+  // handleUserName,
   handleCategory,
   handleAmount,
   handleDifficulty,
-  userName,
+  // userName,
   handleSubmit,
 }) => {
 
@@ -97,8 +97,8 @@ const Form = ({
                 type="text"
                 id="playerName"
                 name="playerName"
-                onChange={handleUserName}
-                value={userName}
+                // onChange={handleUserName}
+                // value={userName}
                 required
                 // Still need to find a way to push name to firebase
             />
