@@ -15,7 +15,6 @@ const Form = ({
   return (
     <>
       <form action="submit" onSubmit={handleSubmit}>
-        {/* Drop down menu for # of questions, category, and difficulty */}
         <fieldset>
             <div className="category">
                 <label htmlFor="quizCategory" className="srOnly">Category</label>
@@ -23,11 +22,7 @@ const Form = ({
                     name="quizCategory"
                     id="quizCategory"
                     onChange={handleCategory}
-                    // defaultValue="1"
                 >
-                    {/* <option disabled selected value="1">
-                    Choose a Category
-                    </option> */}
                     <option value="9">General Knowledge</option>
                     <option value="10">Entertainment: Books</option>
                     <option value="11">Entertainment: Film</option>
@@ -58,14 +53,11 @@ const Form = ({
             <div className="numberQuestions">
                 <label htmlFor="quizNumber" className="srOnly">Number of Questions</label>
                 <select name="quizNumber" id="quizNumber" onChange={handleAmount}>
-                    {/* <option disabled selected value="1">
-                    Number of Questions
-                    </option> */}
-                    <option value="10">10</option>
-                    <option value="20">20</option>
-                    <option value="30">30</option>
-                    <option value="40">40</option>
-                    <option value="50">50</option>
+                    <option value="10">10 questions</option>
+                    <option value="20">20 questions</option>
+                    <option value="30">30 questions</option>
+                    <option value="40">40 questions</option>
+                    <option value="50">50 questions</option>
                 </select>
             </div>
 

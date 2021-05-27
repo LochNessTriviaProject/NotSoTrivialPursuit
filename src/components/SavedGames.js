@@ -43,10 +43,6 @@ const SavedGames = ({ resumeGame }) => {
         <div className="gamesContainer">
           <ul className="savedGames">
             {newDataArray.map((user, index) => {
-              // console.log(user);
-              console.log(user.key)
-              // key={`${user.key}-${index}`}
-              console.log(index)
               return ( 
                     <li key={`${user.key}-${index}`} className={user.completed ? 'completed' : ''}>
                       <button

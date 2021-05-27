@@ -29,8 +29,6 @@ function App() {
   // test change
 
   useEffect(() => {
-    console.log("I'm being ran!!")
-
     dbRef.on("value", (res) => {
       const newDataArray = [];
       const data = res.val();
