@@ -25,3 +25,50 @@ ul {
   right: -3.5rem;
   z-index: -1;
 }
+
+.spiral {
+  position: fixed;
+  width: 12rem;
+  z-index: -2;
+  opacity: 12%;
+  animation: spin 15s infinite linear;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+.spiralOne {
+  top: 20rem;
+  left: 135rem;
+}
+
+.spiralTwo {
+  top: 15rem;
+  left: 3rem;
+}
+
+.spiralThree {
+  top: 67rem;
+  left: 22rem;
+}
+
+.spiralFour {
+  top: 2rem;
+  left: 65rem;
+}
+
+.spiralFive {
+  top: 48rem;
+  left: 100rem;
+}
+
+.spiralSix {
+  top: 55rem;
+  left: 160rem;
+}
