@@ -123,7 +123,6 @@ function App() {
       }).then((res) => {
         if (res.data.response_code === 0) {
           const quizObjArray = res.data.results;
-          console.log(quizObjArray);
 
           const newQuizArray = quizObjArray.map((quiz, index) => {
             return {
@@ -149,7 +148,6 @@ function App() {
           newQuizArray.progress = 0;
           newQuizArray.score = 0;
           newQuizArray.completed = false;
-          console.log(newQuizArray);
           setQuizArray(newQuizArray);
           dbRef.push(newQuizArray);
           setDisplayTrivia(true);
@@ -169,7 +167,6 @@ function App() {
 
   const handleAnswerChoice = (event, quizLength, userSavedName) => {
     const buttonClassName = event.target.className;
-    console.log(quizLength);
 
     if (quizCount === quizLength - 1) {
       if (buttonClassName === "correct") {
@@ -189,7 +186,6 @@ function App() {
   };
 
   const endGame = (savedUserName) => {
-    console.log(savedUserName);
     let updatedArray = [];
     dbRef.on("value", (res) => {
       const newDataArray = [];
@@ -213,7 +209,6 @@ function App() {
           newDataArray.push(searchObj);
         }
       }
-      console.log(savedUserName);
       updatedArray = newDataArray.filter((user) => {
         return user.name === savedUserName;
       });
@@ -239,8 +234,6 @@ function App() {
         progress: quizCount,
         score: quizScore,
       };
-      console.log(data);
-
       savedDbRef.update(data);
     }
     setDisplayTrivia(false);
@@ -251,8 +244,6 @@ function App() {
     dbRef.on("value", (res) => {
       const newDataArray = [];
       const data = res.val();
-      console.log("data", data);
-
       for (let key in data) {
         for (let i = 0; i < Object.keys(data[key]).length - 3; i++) {
           let searchObj = {
@@ -270,18 +261,11 @@ function App() {
           newDataArray.push(searchObj);
         }
       }
-      console.log("newdataArray", newDataArray);
-      console.log(savedUserKey);
 
       const updatedArray = newDataArray.filter((user) => {
         return user.key === savedUserKey;
       });
-
-      console.log("what", updatedArray);
-
       setSavedQuizArray(updatedArray);
-
-      console.log(updatedArray);
       setQuizCount(updatedArray[0].progress);
       setQuizScore(updatedArray[0].score);
       setSavedGame(true);
