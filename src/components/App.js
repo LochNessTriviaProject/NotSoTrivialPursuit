@@ -10,32 +10,21 @@ import shapes from "../assets/shapes.png";
 import Swal from "sweetalert2";
 import "sweetalert2/src/sweetalert2.scss";
 import spiral from "../assets/spiral.png";
+import Header from "./Header";
 
 function App() {
-  //PSEUDO CODE
-  //
+
   const [displayTrivia, setDisplayTrivia] = useState(false);
   const [quizAmount, setQuizAmount] = useState(10);
   const [quizCategory, setQuizCategory] = useState(14); // 9(general knowledge) ~ 32(entertainment)
   const [quizDifficulty, setQuizDifficulty] = useState("hard");
-  const [quizType, setQuizType] = useState("multiple"); //multiple or boolean string
-
-  const [quizOptions, setQuizOptions] = useState([]);
-
+  const quizType = "multiple";
   const [savedGame, setSavedGame] = useState(false);
-  const [userName, setUserName] = useState("");
   const [savedQuizArray, setSavedQuizArray] = useState([1, 2, 3]);
-  const [submitted, setSubmitted] = useState(false);
-
-
-  // const [quizOptions, setQuizOptions] = useState ([]);
   const [quizArray, setQuizArray] = useState([1,2,3]);
   const [quizCount, setQuizCount] = useState(0);
   const [quizScore, setQuizScore] = useState(0);
   const [userData, setUserData] = useState([]);
-  const [resumeData, setResumeData] = useState([]);
-  const [savedQuizScore, setSavedQuizScore] = useState([]);
-
   const dbRef = firebase.database().ref();
   // test change
 
@@ -45,8 +34,6 @@ function App() {
     dbRef.on("value", (res) => {
       const newDataArray = [];
       const data = res.val();
-
-      // console.log("data", data);
       for (let key in data) {
         let searchObj = {
           key: key,
@@ -55,12 +42,8 @@ function App() {
         };
         newDataArray.unshift(searchObj);
       }
-
       setUserData(newDataArray);
     });
-
-    // FIRE BASE IS HARDDDD
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -74,40 +57,61 @@ function App() {
   };
 
   const handleCategory = (event) => {
-    // console.log(event.target.value);
     let categoryValue = parseInt(event.target.value);
     setQuizCategory(categoryValue);
   };
 
   const handleAmount = (event) => {
-    // console.log(event.target.value);
     let amountValue = parseInt(event.target.value);
     setQuizAmount(amountValue);
   };
 
   const handleDifficulty = (event) => {
-    // console.log(event.target.value);
     let difficultyValue = event.target.value;
     setQuizDifficulty(difficultyValue);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // setSubmitted(!submitted);
-    // displayTrivia
+    setQuizCount(0);
 
-
-
-
-
-    //ERROR HANDLING FOR USER RE-CLICKING ON SUBMIT
-    console.log(event);
-    console.log(event.target[5].value);
     let userNameValue = event.target[5].value;
-    
-    setUserName(userNameValue);
+
+    let updatedArray = [];
+    dbRef.on("value", (res) => {
+      const newDataArray = [];
+      const data = res.val();
+
+      for (let key in data) {
+        const counter = Object.keys(data[key]).length;
+
+        for (let i = 0; i < counter - 3; i++) {
+
+          let searchObj = {
+            key: key,
+            name: data[key][i].name,
+            question: data[key][i].question,
+            correctAnswer: data[key][i].correctAnswer,
+            wrongAnswer1: data[key][i].wrongAnswer1,
+            wrongAnswer2: data[key][i].wrongAnswer2,
+            wrongAnswer3: data[key][i].wrongAnswer3,
+            quizLength: data[key][i].quizLength
+          };
 
 
+          newDataArray.push(searchObj);
+        }
+      }
+      
+      updatedArray = newDataArray.filter((user) => {
+        return user.name === userNameValue;
+      });
+    });
+
+    if (updatedArray[0]) {
+      alert('cant use same name twice')
+    }
+    else{
     axios({
       method: "GET",
       url: "https://opentdb.com/api.php",
@@ -151,7 +155,7 @@ function App() {
         console.log(newQuizArray);
         setQuizArray(newQuizArray);
         dbRef.push(newQuizArray);
-
+        setDisplayTrivia(true);
         
       } else {
         Swal.fire({
@@ -164,10 +168,7 @@ function App() {
         });
       }
     });
-    // setTimeout(function () {
-    // dbRef.push(quizArray);
-    // }, 1000);
-    setDisplayTrivia(true);
+    }
   };
 
   // const handleUserName = (event) => {
@@ -223,6 +224,7 @@ function App() {
             wrongAnswer1: data[key][i].wrongAnswer1,
             wrongAnswer2: data[key][i].wrongAnswer2,
             wrongAnswer3: data[key][i].wrongAnswer3,
+            quizLength: data[key][i].quizLength
           };
 
 
@@ -231,13 +233,13 @@ function App() {
       }
       console.log(savedUserName);
       updatedArray = newDataArray.filter((user) => {
-        return user.name == savedUserName;
+        return user.name === savedUserName;
       });
     });
     const savedDbRef = firebase.database().ref(updatedArray[0].key);
 
 
-    if (quizCount === 9) {
+    if (quizCount === updatedArray[0].quizLength-1) {
 
       // savedDbRef.remove();
       // setQuizArray([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]);
@@ -254,11 +256,7 @@ function App() {
 
       savedDbRef.update(data);
     }
-
     setDisplayTrivia(false);
-
-
-    setResumeData(updatedArray);
     setQuizScore(0);
   };
 
@@ -298,6 +296,7 @@ function App() {
 
       setSavedQuizArray(updatedArray);
 
+      console.log(updatedArray)
       setQuizCount(updatedArray[0].progress);
       setQuizScore(updatedArray[0].score);
       setSavedGame(true);
@@ -309,16 +308,7 @@ function App() {
   
   return (
     <>
-      <header>
-        <div className="wrapper">
-          <h1>
-            <span className="notSo">Not So</span>{" "}
-            <span className="trivial">Trivial</span>{" "}
-            <span className="pursuit">Pursuit</span>
-          </h1>
-        </div>
-        {/* <p>TEST: {userName}</p> */}
-      </header>
+      <Header/>
 
       <main>
         <div className="wrapper">
@@ -331,8 +321,6 @@ function App() {
                 quizScore={quizScore}
                 endGame={endGame}
                 //if else statement to show saved games instead of fresh api called games!
-                savedQuizArray={savedQuizArray}
-                savedGame={savedGame}
               />
             ) : (
               <div aria-hidden="true"></div>
@@ -345,20 +333,16 @@ function App() {
               quizScore={quizScore}
               endGame={endGame}
               //if else statement to show saved games instead of fresh api called games!
-              savedQuizArray={savedQuizArray}
-              savedGame={savedGame}
             />
           ) : (
             <div aria-hidden="true"></div>
           )}
 
           <Form
-            // handleUserName={handleUserName}
             handleCategory={handleCategory}
             handleAmount={handleAmount}
             handleDifficulty={handleDifficulty}
             handleSubmit={handleSubmit}
-            // userName={userName}
           />
 
           <SavedGames userData={userData} resumeGame={resumeGame} />

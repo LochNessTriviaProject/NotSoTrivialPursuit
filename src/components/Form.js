@@ -1,11 +1,8 @@
-import { useState } from 'react';
 
 const Form = ({
-  // handleUserName,
   handleCategory,
   handleAmount,
   handleDifficulty,
-  // userName,
   handleSubmit,
 }) => {
 
@@ -26,10 +23,11 @@ const Form = ({
                     name="quizCategory"
                     id="quizCategory"
                     onChange={handleCategory}
+                    // defaultValue="1"
                 >
-                    <option disabled selected value>
+                    {/* <option disabled selected value="1">
                     Choose a Category
-                    </option>
+                    </option> */}
                     <option value="9">General Knowledge</option>
                     <option value="10">Entertainment: Books</option>
                     <option value="11">Entertainment: Film</option>
@@ -60,9 +58,9 @@ const Form = ({
             <div className="numberQuestions">
                 <label htmlFor="quizNumber" className="srOnly">Number of Questions</label>
                 <select name="quizNumber" id="quizNumber" onChange={handleAmount}>
-                    <option disabled selected value>
+                    {/* <option disabled selected value="1">
                     Number of Questions
-                    </option>
+                    </option> */}
                     <option value="10">10</option>
                     <option value="20">20</option>
                     <option value="30">30</option>
@@ -77,10 +75,11 @@ const Form = ({
                     name="quizDifficulty"
                     id="quizDifficulty"
                     onChange={handleDifficulty}
+                    
                 >
-                    <option disabled selected value>
+                    {/* <option disabled selected value="1">
                     Difficulty Level
-                    </option>
+                    </option> */}
                     <option value="easy">Easy</option>
                     <option value="medium">Medium</option>
                     <option value="hard">Hard</option>
@@ -97,10 +96,7 @@ const Form = ({
                 type="text"
                 id="playerName"
                 name="playerName"
-                // onChange={handleUserName}
-                // value={userName}
                 required
-                // Still need to find a way to push name to firebase
             />
           </div>
         </fieldset>
