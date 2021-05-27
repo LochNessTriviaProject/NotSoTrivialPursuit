@@ -1,6 +1,6 @@
 // Saved Games Component Styles
 
-h2::before {
+.gamesHeader::before {
   content: "";
   background-image: url("../assets/folder.png");
   background-size: 14rem 10rem;
@@ -12,13 +12,21 @@ h2::before {
   top: 6rem;
   right: 1rem;
   transform: rotate(10deg);
+  z-index: -1;
+}
+
+.gamesContainer {
+  display: block;
+  height: 50rem;
+  overflow-y: scroll;
+  border: 0.2rem solid $darkPurple;
+  border-radius: 1rem;
 }
 
 .savedGames {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 10rem;
   li {
     width: 100%;
   }

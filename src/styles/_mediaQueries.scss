@@ -44,27 +44,142 @@
   .shapes {
     width: 35rem;
   }
-  h2 {
+  .gamesHeader {
     font-size: 2.5rem;
-    text-align: left;
+    position: relative;
+    right: 4rem;
   }
-  h2::before {
+  .gamesHeader::before {
     background-size: 8rem 7rem;
     top: 9rem;
     right: -5rem;
   }
+  .exitButton {
+    font-size: 3.2rem;
+    bottom: 51rem;
+    right: -23.6rem;
+  }
 }
 
 @media (max-width: 540px) {
-  //   h1 {
-  //     font-size: 6rem;
-  //     line-height: 4rem;
-  //   }
   .shapes {
     width: 28rem;
   }
   select,
   input {
     width: 30rem;
+  }
+  .exitButton {
+    bottom: 53rem;
+    right: -18.6rem;
+  }
+}
+
+@media (max-width: 477px) {
+  header .wrapper {
+    padding-top: 2rem;
+  }
+  h1 {
+    width: 40rem;
+    .notSo {
+      right: 6.5rem;
+    }
+    .trivial::after {
+      top: 12rem;
+    }
+    .pursuit {
+      bottom: 13rem;
+      left: 7rem;
+    }
+    .pursuit::before {
+      top: -5rem;
+      left: 19rem;
+    }
+  }
+  h1::before {
+    left: 16.4rem;
+  }
+  h1::after {
+    bottom: 33rem;
+    right: 11rem;
+  }
+  .gamesHeader::before {
+    top: 4rem;
+    right: -12rem;
+    width: 7.5rem;
+  }
+  .answersContainer {
+    flex-direction: column;
+  }
+  .answersContainer li {
+    margin: 0.5rem;
+  }
+  .wrong,
+  .correct {
+    padding: 1rem 2rem;
+  }
+  .triviaContent {
+    margin: 1.5rem;
+  }
+  .exitButton {
+    right: -16.6rem;
+  }
+}
+
+@media (max-width: 391px) {
+  h1 .pursuit {
+    bottom: -4rem;
+    left: 0;
+  }
+  h1::after {
+    bottom: 36rem;
+    right: 1rem;
+  }
+  .exitButton {
+    right: -13rem;
+    bottom: 55rem;
+  }
+}
+
+@media (max-width: 365px) {
+  h1 {
+    width: 24rem;
+  }
+  h1 .notSo {
+    right: -0.5rem;
+  }
+  h1::before {
+    left: 7rem;
+    top: 4rem;
+  }
+  h1 .trivial::after {
+    top: 14rem;
+  }
+  form {
+    padding-top: 6rem;
+  }
+  .modalContent {
+    padding: 7rem -3rem 3rem;
+    .triviaContent {
+      margin: 0;
+    }
+    .buttonsContainer {
+      width: 25rem;
+      margin-top: 2rem;
+    }
+    .wrong,
+    .correct {
+      margin: 1rem 2rem;
+      padding: 2rem 3rem;
+    }
+  }
+}
+
+@media (max-width: 320px) {
+  .modalContent {
+    padding: 7rem 0 2rem;
+  }
+  .exitButton {
+    right: -10.5rem;
   }
 }

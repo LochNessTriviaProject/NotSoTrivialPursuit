@@ -7,6 +7,8 @@ import Footer from "./Footer";
 import Form from "./Form";
 import SavedGames from "./SavedGames";
 import shapes from "../assets/shapes.png";
+import Swal from "sweetalert2";
+import "sweetalert2/src/sweetalert2.scss";
 
 function App() {
   //PSEUDO CODE
@@ -23,6 +25,7 @@ function App() {
   const [userName, setUserName] = useState("");
   const [savedQuizArray, setSavedQuizArray] = useState([1, 2, 3]);
   const [submitted, setSubmitted] = useState(false);
+
 
   // const [quizOptions, setQuizOptions] = useState ([]);
   const [quizArray, setQuizArray] = useState([1, 2, 3]);
@@ -52,7 +55,9 @@ function App() {
 
         const quizObjArray = res.data.results;
         console.log(quizObjArray);
+
         const newQuizArray = quizObjArray.map((quiz, index) => {
+
           return {
             name: userName,
             quizLength: quizObjArray.length,
@@ -95,7 +100,14 @@ function App() {
           setUserData(newDataArray);
         });
       } else {
-        alert("no dice pal");
+        Swal.fire({
+          title: "Uh oh!",
+          text: "We don't have enough questions in that category to challenge you.",
+          imageUrl:
+            "https://images.blush.design/UMepYocbuMn1l5E92vl7?w=920&auto=compress&cs=srgb",
+          imageWidth: 300,
+          imageAlt: "Custom image",
+        });
       }
     });
 
@@ -105,10 +117,12 @@ function App() {
   }, [userName]);
 
   const unicodeReplacer = (string) => {
+
     return string
       .replace(/&quot;/g, `"`)
       .replace(/&#039;/g, `'`)
       .replace(/&ouml;/g, "ö");
+
   };
 
   const handleCategory = (event) => {
@@ -186,7 +200,9 @@ function App() {
 
       for (let key in data) {
         const counter = Object.keys(data[key]).length;
+
         for (let i = 0; i < counter - 2; i++) {
+
           let searchObj = {
             key: key,
             name: data[key][i].name,
@@ -197,6 +213,7 @@ function App() {
             wrongAnswer3: data[key][i].wrongAnswer3,
           };
 
+
           newDataArray.push(searchObj);
         }
       }
@@ -206,6 +223,7 @@ function App() {
       });
     });
     const savedDbRef = firebase.database().ref(updatedArray[0].key);
+
 
     if (quizCount === 9) {
       // savedDbRef.remove();
@@ -223,11 +241,13 @@ function App() {
 
     setDisplayTrivia(false);
 
+
     setResumeData(updatedArray);
     setQuizScore(0);
   };
 
   const resumeGame = (savedUserKey) => {
+
     dbRef.on("value", (res) => {
       const newDataArray = [];
       const data = res.val();
@@ -252,6 +272,7 @@ function App() {
       }
       console.log("newdataArray", newDataArray);
       console.log(savedUserKey);
+
 
       const updatedArray = newDataArray.filter((user) => {
         return user.key === savedUserKey;

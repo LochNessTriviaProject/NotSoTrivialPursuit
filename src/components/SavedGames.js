@@ -27,48 +27,50 @@ const SavedGames = ({ userData, resumeGame }) => {
       newDataArray.unshift(searchObj);
     }
   });
-
-    console.log(newDataArray);
-
-
   return (
     <>
       <div className="wrapper">
-        <h2>Saved Games:</h2>
-        <ul className="savedGames">
-          {newDataArray.map((user, index) => {
-            return (
-              <>
-                {user.score ? (
-                  <li key={`${user.key}-${index}`}>
-                    <button
-                      onClick={() => {
-                        resumeGame(user.key);
-                      }}
-                      className={user.name}
-                    >
-                      <span>Name:</span> {user.name} |category: {user.category}{" "}
-                      | <span>Progress:</span> {user.progress}/10 questions
-                      Score: {user.score}
-                    </button>
-                  </li>
-                ) : (
-                  <li key={`${user.key}-${index}`}>
-                    <button
-                      onClick={() => {
-                        resumeGame(user.key);
-                      }}
-                      className={user.name}
-                    >
-                      <span>Name:</span> {user.name} | category: {user.category}{" "}
-                      | <span>Progress:</span> 0/10 questions Score: 0
-                    </button>
-                  </li>
-                )}
-              </>
-            );
-          })}
-        </ul>
+        <div className="flexContainer">
+          <h2 className="gamesHeader">Saved Games:</h2>
+        </div>
+        <container className="gamesContainer">
+          <ul className="savedGames">
+            {newDataArray.map((user) => {
+              console.log(user);
+              return (
+                <>
+                  {user.score ? (
+                    <li key={`${user.key}-${index}`}>
+                      <button
+                        onClick={() => {
+                          resumeGame(user.name);
+                        }}
+                        className={user.name}
+                      >
+                        <span>Name:</span> {user.name} | category: {user.category}{" "}
+                      | <span>Progress:</span>{" "}
+                        {user.progress}/10 questions Score: user.score
+                      </button>
+                    </li>
+                  ) : (
+                    <li key={`${user.key}-${index}`}>
+                      <button
+                        onClick={() => {
+                          resumeGame(user.name);
+                        }}
+                        className={user.name}
+                      >
+                        <span>Name:</span> {user.name} | category: {user.category}{" "}
+                      | <span>Progress:</span>{" "}
+                        0/10 questions Score: 0
+                      </button>
+                    </li>
+                  )}
+                </>
+              );
+            })}
+          </ul>
+        </container>
       </div>
     </>
   );
