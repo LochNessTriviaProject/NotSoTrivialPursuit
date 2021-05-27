@@ -6,7 +6,7 @@ import Trivia from "./Trivia";
 import Footer from "./Footer";
 import Form from "./Form";
 import SavedGames from "./SavedGames";
-import shapes from "../assets/shapes.png"; 
+import shapes from "../assets/shapes.png";
 
 function App() {
   //PSEUDO CODE
@@ -21,7 +21,8 @@ function App() {
 
   const [savedGame, setSavedGame] = useState(false);
   const [userName, setUserName] = useState("");
-  const [savedQuizArray, setSavedQuizArray] = useState([1,2,3]);
+  const [savedQuizArray, setSavedQuizArray] = useState([1, 2, 3]);
+  const [submitted, setSubmitted] = useState(false);
 
   // const [quizOptions, setQuizOptions] = useState ([]);
   const [quizArray, setQuizArray] = useState([1, 2, 3]);
@@ -46,58 +47,35 @@ function App() {
         type: quizType,
       },
     }).then((res) => {
-      console.log(res);
-      console.log(res.data.response_code);
-
       if (res.data.response_code === 0) {
         // quotes and '(apostrophe) are turning into weird unicodes (&#039;) from API call right away, there should be way to convert/fix this?
-        console.log(res.data.results);
 
         const quizObjArray = res.data.results;
-
         console.log(quizObjArray);
-        // let re = /(&quot;)|(&#039;)/gi;
-        // const doubleQuote = `"`;
-        
-        const newQuizArray = res.data.results.map((quiz, index) => {
-          console.log(res.data.results.length);
+        const newQuizArray = quizObjArray.map((quiz, index) => {
           return {
             name: userName,
-            quizLength: res.data.results.length,
+            quizLength: quizObjArray.length,
+            category: quizObjArray[index].category,
             key: `quiz-${index}`,
-            question: unicodeReplacer(res.data.results[index].question),
-            correctAnswer: unicodeReplacer(
-              res.data.results[index].correct_answer
-            ),
+            question: unicodeReplacer(quizObjArray[index].question),
+            correctAnswer: unicodeReplacer(quizObjArray[index].correct_answer),
             wrongAnswer1: unicodeReplacer(
-              res.data.results[index].incorrect_answers[0]
+              quizObjArray[index].incorrect_answers[0]
             ),
             wrongAnswer2: unicodeReplacer(
-              res.data.results[index].incorrect_answers[1]),
+              quizObjArray[index].incorrect_answers[1]
+            ),
             wrongAnswer3: unicodeReplacer(
-              res.data.results[index].incorrect_answers[2]),
+              quizObjArray[index].incorrect_answers[2]
+            ),
           };
         });
 
-        
-
-        // newQuizArray.map((quiz)=> {
-        //   console.log(quiz);
-        //   console.log(quiz.question);
-        //   return (
-        //     {
-        //       name: quiz.name,
-        //       question: quiz.question
-        //     }
-        //   )
-        // })
-
-
-
         newQuizArray.progress = 0;
         newQuizArray.score = 0;
-        
 
+        console.log(newQuizArray);
         setQuizArray(newQuizArray);
 
         dbRef.on("value", (res) => {
@@ -115,7 +93,6 @@ function App() {
           }
 
           setUserData(newDataArray);
-
         });
       } else {
         alert("no dice pal");
@@ -132,7 +109,7 @@ function App() {
       .replace(/&quot;/g, `"`)
       .replace(/&#039;/g, `'`)
       .replace(/&ouml;/g, "ö");
-  }
+  };
 
   const handleCategory = (event) => {
     // console.log(event.target.value);
@@ -154,32 +131,37 @@ function App() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    // setSubmitted(!submitted);
     // displayTrivia
+
+    //ERROR HANDLING FOR USER RE-CLICKING ON SUBMIT
+    
+    
     dbRef.push(quizArray);
 
-
+    // setTimeout(function () {
+    // dbRef.push(quizArray);
+    // }, 1000);
     setDisplayTrivia(true);
-
-
-
   };
 
   const handleUserName = (event) => {
     let userNameValue = event.target.value;
     setUserName(userNameValue);
+    console.log(userNameValue);
   };
   const handleAnswerChoice = (event, quizLength, userSavedName) => {
     const buttonClassName = event.target.className;
+    console.log(quizLength);
 
     if (quizCount === quizLength - 1) {
       if (buttonClassName === "correct") {
         //SHOW CORRECT ANIMATION HERE?
         setQuizScore(quizScore + 1);
-        console.log(quizCount);
+
         endGame(userSavedName);
       } else {
         //SHOW INCORRECT ANIMATION HERE?
-        console.log(quizCount);
         endGame(userSavedName);
       }
     } else {
@@ -187,27 +169,24 @@ function App() {
         //SHOW CORRECT ANIMATION HERE?
         setQuizScore(quizScore + 1);
         setQuizCount(quizCount + 1);
-        console.log(quizCount);
       } else {
         //SHOW INCORRECT ANIMATION HERE?
         setQuizCount(quizCount + 1);
-        console.log(quizCount);
       }
     }
   };
 
   const endGame = (savedUserName) => {
     // when user wants to end game, hide modal
-    setDisplayTrivia(false);
+    console.log(savedUserName);
     let updatedArray = [];
-
     dbRef.on("value", (res) => {
       const newDataArray = [];
       const data = res.val();
-      
+
       for (let key in data) {
         const counter = Object.keys(data[key]).length;
-        for (let i = 0; i < (counter-2); i++) {
+        for (let i = 0; i < counter - 2; i++) {
           let searchObj = {
             key: key,
             name: data[key][i].name,
@@ -220,59 +199,59 @@ function App() {
 
           newDataArray.push(searchObj);
         }
-
       }
+      console.log(savedUserName);
       updatedArray = newDataArray.filter((user) => {
-
         return user.name == savedUserName;
       });
-
     });
+    const savedDbRef = firebase.database().ref(updatedArray[0].key);
 
-        
-        const savedDbRef = firebase.database().ref(updatedArray[0].key);
-        
-        
-        
-        
-        const data = {
-          progress: quizCount,
-          score: quizScore,
-        };
-        console.log(data);
+    if (quizCount === 9) {
+      // savedDbRef.remove();
+      
+      alert("yay u finished quiz!");
+    } else {
+      const data = {
+        progress: quizCount,
+        score: quizScore,
+      };
+      console.log(data);
 
-        savedDbRef.update(data);
-        setResumeData(updatedArray);
-        setQuizScore(0);
+      savedDbRef.update(data);
+    }
+
+    setDisplayTrivia(false);
+
+    setResumeData(updatedArray);
+    setQuizScore(0);
   };
 
   const resumeGame = (savedUserKey) => {
-
-
-
     dbRef.on("value", (res) => {
       const newDataArray = [];
       const data = res.val();
       console.log("data", data);
 
-              for (let key in data) {
-
-                  for (let i=0; i<Object.keys(data[key]).length-2;i++){
-                    let searchObj = {
-                      key: key,
-                      name: data[key][i].name,
-                      progress: data[key].progress,
-                      score: data[key].score,
-                      question: data[key][i].question,
-                      correctAnswer: data[key][i].correctAnswer,
-                      wrongAnswer1: data[key][i].wrongAnswer1,
-                      wrongAnswer2: data[key][i].wrongAnswer2,
-                      wrongAnswer3: data[key][i].wrongAnswer3,
-                    };
-                    newDataArray.push(searchObj);
-                  }
-              }
-              console.log("newdataArray", newDataArray);
+      for (let key in data) {
+        for (let i = 0; i < Object.keys(data[key]).length - 2; i++) {
+          let searchObj = {
+            key: key,
+            name: data[key][i].name,
+            progress: data[key].progress,
+            score: data[key].score,
+            quizLength: data[key][i].quizLength,
+            question: data[key][i].question,
+            correctAnswer: data[key][i].correctAnswer,
+            wrongAnswer1: data[key][i].wrongAnswer1,
+            wrongAnswer2: data[key][i].wrongAnswer2,
+            wrongAnswer3: data[key][i].wrongAnswer3,
+          };
+          newDataArray.push(searchObj);
+        }
+      }
+      console.log("newdataArray", newDataArray);
+      console.log(savedUserKey);
 
       const updatedArray = newDataArray.filter((user) => {
         return user.key === savedUserKey;
@@ -286,39 +265,39 @@ function App() {
       setSavedGame(true);
     });
 
-     setDisplayTrivia(true);
+    setDisplayTrivia(true);
   };
   return (
     <>
       <header>
         <div className="wrapper">
-          <h1><span className="notSo">Not So</span> <span className="trivial">Trivial</span> <span className="pursuit">Pursuit</span></h1>
+          <h1>
+            <span className="notSo">Not So</span>{" "}
+            <span className="trivial">Trivial</span>{" "}
+            <span className="pursuit">Pursuit</span>
+          </h1>
         </div>
         {/* <p>TEST: {userName}</p> */}
       </header>
 
       <main>
         <div className="wrapper">
-
-          {
-            savedGame ? (
+          {savedGame ? (
             displayTrivia ? (
-            <Trivia
-              quizArray={savedQuizArray}
-              quizCount={quizCount}
-              handleAnswerChoice={handleAnswerChoice}
-              quizScore={quizScore}
-              endGame={endGame}
-              //if else statement to show saved games instead of fresh api called games!
-              savedQuizArray={savedQuizArray}
-              savedGame={savedGame}
-            />
-          ) : (
-            <div aria-hidden="true"></div>
-          )
+              <Trivia
+                quizArray={savedQuizArray}
+                quizCount={quizCount}
+                handleAnswerChoice={handleAnswerChoice}
+                quizScore={quizScore}
+                endGame={endGame}
+                //if else statement to show saved games instead of fresh api called games!
+                savedQuizArray={savedQuizArray}
+                savedGame={savedGame}
+              />
             ) : (
-
-              displayTrivia ? (
+              <div aria-hidden="true"></div>
+            )
+          ) : displayTrivia ? (
             <Trivia
               quizArray={quizArray}
               quizCount={quizCount}
@@ -329,27 +308,22 @@ function App() {
               savedQuizArray={savedQuizArray}
               savedGame={savedGame}
             />
+          ) : (
+            <div aria-hidden="true"></div>
+          )}
 
-        ) : (
-          <div aria-hidden="true"></div>
-        )
-            )
-      }
-      
+          <Form
+            handleUserName={handleUserName}
+            handleCategory={handleCategory}
+            handleAmount={handleAmount}
+            handleDifficulty={handleDifficulty}
+            handleSubmit={handleSubmit}
+            userName={userName}
+          />
 
-        <Form
-          handleUserName={handleUserName}
-          handleCategory={handleCategory}
-          handleAmount={handleAmount}
-          handleDifficulty={handleDifficulty}
-          handleSubmit={handleSubmit}
-          userName={userName}
-        />
-
-        <SavedGames userData={userData} resumeGame={resumeGame} />
-
+          <SavedGames userData={userData} resumeGame={resumeGame} />
         </div>
-        <img src={shapes} alt="" className="shapes"/>
+        <img src={shapes} alt="" className="shapes" />
       </main>
 
       <Footer />

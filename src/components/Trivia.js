@@ -3,6 +3,7 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState, useEffect } from 'react'
 import blob from '../assets/blob.svg';
+import firebase from "../config/firebase";
 
 const Trivia = ({
   savedGame,
@@ -18,8 +19,9 @@ const Trivia = ({
   const randoIndex = Math.floor(Math.random() * 4);
   console.log("random", randoIndex);
 
-
   let quizLength = quizArray[0].quizLength;
+  // let userSavedKey = quizArray.key;
+
   let userSavedName = quizArray[0].name;
   console.log(quizArray[0].quizLength);
   let savedProgress = quizArray[0].progress;
