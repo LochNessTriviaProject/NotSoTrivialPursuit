@@ -35,7 +35,7 @@ const SavedGames = ({ userData, resumeGame }) => {
         </div>
         <container className="gamesContainer">
           <ul className="savedGames">
-            {newDataArray.map((user) => {
+            {newDataArray.map((user, index) => {
               console.log(user);
               return (
                 <>
