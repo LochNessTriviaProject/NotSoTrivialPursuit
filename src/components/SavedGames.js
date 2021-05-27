@@ -1,4 +1,5 @@
 import firebase from "../config/firebase";
+import {useState} from 'react';
 // Create UL to house all our saved games and another UL for completed games
 // Within UL we have unique LI for each saved game
 // Saved games each have a firebase array with game ID (i.e. Spencer123), complete set of questions and answers based on API call and index to save how far the user has gotten in the game (i.e. question 7 of 10)
@@ -21,12 +22,32 @@ const SavedGames = ({ userData, resumeGame }) => {
         name: data[key][0].name,
         progress: data[key].progress,
         score: data[key].score,
-        category: data[key][0].category
+        category: data[key][0].category,
+        completed:data[key].completed
 
       };
       newDataArray.unshift(searchObj);
     }
   });
+
+  // newDataArray.filter(()=>{
+
+  //   return(
+      
+  //   )
+  // })
+
+  // let filteredData = [];
+  // const filterCompleted = () => {
+  //   filteredData = newDataArray.filter((user)=>{
+  //     console.log(user);
+  //     return user.completed === false;
+  //   })
+  // }
+  
+  // filterCompleted();
+
+
   return (
     <>
       <div className="wrapper">
@@ -40,23 +61,23 @@ const SavedGames = ({ userData, resumeGame }) => {
               return (
                 <>
                   {user.score ? (
-                    <li key={`${user.key}-${index}`}>
+                    <li key={`${user.key}-${index}`} className={user.completed ? 'completed' : ''}>
                       <button
                         onClick={() => {
-                          resumeGame(user.name);
+                          resumeGame(user.key);
                         }}
                         className={user.name}
                       >
                         <span>Name:</span> {user.name} | category: {user.category}{" "}
                       | <span>Progress:</span>{" "}
-                        {user.progress}/10 questions Score: user.score
+                        {user.progress}/10 questions Score: {user.score}
                       </button>
                     </li>
                   ) : (
-                    <li key={`${user.key}-${index}`}>
+                    <li key={`${user.key}-${index}`} className={user.completed ? 'completed' : ''}>
                       <button
                         onClick={() => {
-                          resumeGame(user.name);
+                          resumeGame(user.key);
                         }}
                         className={user.name}
                       >

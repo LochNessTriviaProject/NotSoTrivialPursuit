@@ -28,7 +28,7 @@ function App() {
 
 
   // const [quizOptions, setQuizOptions] = useState ([]);
-  const [quizArray, setQuizArray] = useState([1, 2, 3]);
+  const [quizArray, setQuizArray] = useState([1,2,3]);
   const [quizCount, setQuizCount] = useState(0);
   const [quizScore, setQuizScore] = useState(0);
   const [userData, setUserData] = useState([]);
@@ -39,82 +39,29 @@ function App() {
   // test change
 
   useEffect(() => {
-    axios({
-      method: "GET",
-      url: "https://opentdb.com/api.php",
-      responseType: "json",
-      params: {
-        amount: quizAmount,
-        category: quizCategory,
-        difficulty: quizDifficulty,
-        type: quizType,
-      },
-    }).then((res) => {
-      if (res.data.response_code === 0) {
-        // quotes and '(apostrophe) are turning into weird unicodes (&#039;) from API call right away, there should be way to convert/fix this?
+    console.log("I'm being ran!!")
 
-        const quizObjArray = res.data.results;
-        console.log(quizObjArray);
+    dbRef.on("value", (res) => {
+      const newDataArray = [];
+      const data = res.val();
 
-        const newQuizArray = quizObjArray.map((quiz, index) => {
-
-          return {
-            name: userName,
-            quizLength: quizObjArray.length,
-            category: quizObjArray[index].category,
-            key: `quiz-${index}`,
-            question: unicodeReplacer(quizObjArray[index].question),
-            correctAnswer: unicodeReplacer(quizObjArray[index].correct_answer),
-            wrongAnswer1: unicodeReplacer(
-              quizObjArray[index].incorrect_answers[0]
-            ),
-            wrongAnswer2: unicodeReplacer(
-              quizObjArray[index].incorrect_answers[1]
-            ),
-            wrongAnswer3: unicodeReplacer(
-              quizObjArray[index].incorrect_answers[2]
-            ),
-          };
-        });
-
-        newQuizArray.progress = 0;
-        newQuizArray.score = 0;
-
-        console.log(newQuizArray);
-        setQuizArray(newQuizArray);
-
-        dbRef.on("value", (res) => {
-          const newDataArray = [];
-          const data = res.val();
-
-          // console.log("data", data);
-          for (let key in data) {
-            let searchObj = {
-              key: key,
-              name: data[key][0].name,
-              progress: data[key][0].progress,
-            };
-            newDataArray.unshift(searchObj);
-          }
-
-          setUserData(newDataArray);
-        });
-      } else {
-        Swal.fire({
-          title: "Uh oh!",
-          text: "We don't have enough questions in that category to challenge you.",
-          imageUrl:
-            "https://images.blush.design/UMepYocbuMn1l5E92vl7?w=920&auto=compress&cs=srgb",
-          imageWidth: 300,
-          imageAlt: "Custom image",
-        });
+      // console.log("data", data);
+      for (let key in data) {
+        let searchObj = {
+          key: key,
+          name: data[key][0].name,
+          progress: data[key][0].progress,
+        };
+        newDataArray.unshift(searchObj);
       }
+
+      setUserData(newDataArray);
     });
 
     // FIRE BASE IS HARDDDD
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userName]);
+  }, []);
 
   const unicodeReplacer = (string) => {
 
@@ -147,21 +94,87 @@ function App() {
     event.preventDefault();
     // setSubmitted(!submitted);
     // displayTrivia
-    //ERROR HANDLING FOR USER RE-CLICKING ON SUBMIT
-    
-    dbRef.push(quizArray);
 
+
+
+
+
+    //ERROR HANDLING FOR USER RE-CLICKING ON SUBMIT
+    console.log(event);
+    console.log(event.target[5].value);
+    let userNameValue = event.target[5].value;
+    
+    setUserName(userNameValue);
+
+
+    axios({
+      method: "GET",
+      url: "https://opentdb.com/api.php",
+      responseType: "json",
+      params: {
+        amount: quizAmount,
+        category: quizCategory,
+        difficulty: quizDifficulty,
+        type: quizType,
+      },
+    }).then((res) => {
+      if (res.data.response_code === 0) {
+        // quotes and '(apostrophe) are turning into weird unicodes (&#039;) from API call right away, there should be way to convert/fix this?
+
+        const quizObjArray = res.data.results;
+        console.log(quizObjArray);
+
+        const newQuizArray = quizObjArray.map((quiz, index) => {
+
+          return {
+            name: userNameValue,
+            quizLength: quizObjArray.length,
+            category: quizObjArray[index].category,
+            key: `quiz-${index}`,
+            question: unicodeReplacer(quizObjArray[index].question),
+            correctAnswer: unicodeReplacer(quizObjArray[index].correct_answer),
+            wrongAnswer1: unicodeReplacer(
+              quizObjArray[index].incorrect_answers[0]
+            ),
+            wrongAnswer2: unicodeReplacer(
+              quizObjArray[index].incorrect_answers[1]
+            ),
+            wrongAnswer3: unicodeReplacer(
+              quizObjArray[index].incorrect_answers[2]
+            ),
+          };
+        });
+        newQuizArray.progress = 0;
+        newQuizArray.score = 0;
+        newQuizArray.completed = false;
+        console.log(newQuizArray);
+        setQuizArray(newQuizArray);
+        dbRef.push(newQuizArray);
+
+        
+      } else {
+        Swal.fire({
+          title: "Uh oh!",
+          text: "We don't have enough questions in that category to challenge you.",
+          imageUrl:
+            "https://images.blush.design/UMepYocbuMn1l5E92vl7?w=920&auto=compress&cs=srgb",
+          imageWidth: 300,
+          imageAlt: "Custom image",
+        });
+      }
+    });
     // setTimeout(function () {
     // dbRef.push(quizArray);
     // }, 1000);
     setDisplayTrivia(true);
   };
 
-  const handleUserName = (event) => {
-    let userNameValue = event.target.value;
-    setUserName(userNameValue);
-    console.log(userNameValue);
-  };
+  // const handleUserName = (event) => {
+  //   let userNameValue = event.target.value;
+  //   setUserName(userNameValue);
+  //   console.log(userNameValue);
+  // };
+
   const handleAnswerChoice = (event, quizLength, userSavedName) => {
     const buttonClassName = event.target.className;
     console.log(quizLength);
@@ -199,7 +212,7 @@ function App() {
       for (let key in data) {
         const counter = Object.keys(data[key]).length;
 
-        for (let i = 0; i < counter - 2; i++) {
+        for (let i = 0; i < counter - 3; i++) {
 
           let searchObj = {
             key: key,
@@ -224,9 +237,13 @@ function App() {
 
 
     if (quizCount === 9) {
+
       // savedDbRef.remove();
-      
+      // setQuizArray([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]);
+
+      savedDbRef.update({completed:true, progress:quizCount+1, score: quizScore});
       alert("yay u finished quiz!");
+
     } else {
       const data = {
         progress: quizCount,
@@ -252,7 +269,7 @@ function App() {
       console.log("data", data);
 
       for (let key in data) {
-        for (let i = 0; i < Object.keys(data[key]).length - 2; i++) {
+        for (let i = 0; i < Object.keys(data[key]).length - 3; i++) {
           let searchObj = {
             key: key,
             name: data[key][i].name,
@@ -279,6 +296,7 @@ function App() {
       console.log("what", updatedArray);
 
       setSavedQuizArray(updatedArray);
+
       setQuizCount(updatedArray[0].progress);
       setQuizScore(updatedArray[0].score);
       setSavedGame(true);
@@ -286,6 +304,8 @@ function App() {
 
     setDisplayTrivia(true);
   };
+
+  
   return (
     <>
       <header>
@@ -332,12 +352,12 @@ function App() {
           )}
 
           <Form
-            handleUserName={handleUserName}
+            // handleUserName={handleUserName}
             handleCategory={handleCategory}
             handleAmount={handleAmount}
             handleDifficulty={handleDifficulty}
             handleSubmit={handleSubmit}
-            userName={userName}
+            // userName={userName}
           />
 
           <SavedGames userData={userData} resumeGame={resumeGame} />
