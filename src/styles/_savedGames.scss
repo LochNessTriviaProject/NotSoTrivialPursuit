@@ -39,8 +39,7 @@
     margin: 1rem 0;
     cursor: pointer;
     transition: all 0.2s ease;
-    &:hover,
-    &:focus {
+    &:hover {
       background: #fff;
       border: 0.3rem dotted $darkPurple;
     }
