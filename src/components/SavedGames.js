@@ -1,5 +1,4 @@
 import firebase from "../config/firebase";
-import {useState} from 'react';
 // Create UL to house all our saved games and another UL for completed games
 // Within UL we have unique LI for each saved game
 // Saved games each have a firebase array with game ID (i.e. Spencer123), complete set of questions and answers based on API call and index to save how far the user has gotten in the game (i.e. question 7 of 10)
@@ -8,8 +7,7 @@ import {useState} from 'react';
 
 // In progress games will show at at the top, with some indicator that they are still ongoing, completed games will show up at the bottom with the score displayed.
 
-const SavedGames = ({ userData, resumeGame }) => {
-  // console.log(userData);
+const SavedGames = ({ resumeGame }) => {
 
   const dbRef = firebase.database().ref();
   const newDataArray = [];
@@ -23,30 +21,18 @@ const SavedGames = ({ userData, resumeGame }) => {
         progress: data[key].progress,
         score: data[key].score,
         category: data[key][0].category,
-        completed:data[key].completed
+        completed:data[key].completed,
+        quizLength:data[key][0].quizLength
 
       };
       newDataArray.unshift(searchObj);
     }
   });
 
-  // newDataArray.filter(()=>{
 
-  //   return(
-      
-  //   )
-  // })
-
-  // let filteredData = [];
-  // const filterCompleted = () => {
-  //   filteredData = newDataArray.filter((user)=>{
-  //     console.log(user);
-  //     return user.completed === false;
-  //   })
-  // }
-  
-  // filterCompleted();
-
+  const completed = () => {
+    alert('this is already completed!')
+  }
 
   return (
     <>
@@ -54,44 +40,32 @@ const SavedGames = ({ userData, resumeGame }) => {
         <div className="flexContainer">
           <h2 className="gamesHeader">Saved Games:</h2>
         </div>
-        <container className="gamesContainer">
+        <div className="gamesContainer">
           <ul className="savedGames">
             {newDataArray.map((user, index) => {
               // console.log(user);
-              return (
-                <>
-                  {user.score ? (
+              console.log(user.key)
+              // key={`${user.key}-${index}`}
+              console.log(index)
+              return ( 
                     <li key={`${user.key}-${index}`} className={user.completed ? 'completed' : ''}>
                       <button
-                        onClick={() => {
+                        onClick={user.completed ? completed : () => {
                           resumeGame(user.key);
                         }}
                         className={user.name}
                       >
                         <span>Name:</span> {user.name} | category: {user.category}{" "}
                       | <span>Progress:</span>{" "}
-                        {user.progress}/10 questions Score: {user.score}
+
+                      {user.score ? `${user.progress}/${user.quizLength} questions Score: ${user.score}` : `0/10 questions Score: 0`}
+                    
                       </button>
                     </li>
-                  ) : (
-                    <li key={`${user.key}-${index}`} className={user.completed ? 'completed' : ''}>
-                      <button
-                        onClick={() => {
-                          resumeGame(user.key);
-                        }}
-                        className={user.name}
-                      >
-                        <span>Name:</span> {user.name} | category: {user.category}{" "}
-                      | <span>Progress:</span>{" "}
-                        0/10 questions Score: 0
-                      </button>
-                    </li>
-                  )}
-                </>
               );
             })}
           </ul>
-        </container>
+        </div>
       </div>
     </>
   );
