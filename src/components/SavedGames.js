@@ -29,7 +29,7 @@ const SavedGames = ({ userData, resumeGame }) => {
     <>
       <div className="wrapper">
         <div className="flexContainer">
-          <h2>Saved Games:</h2>
+          <h2 className="gamesHeader">Saved Games:</h2>
         </div>
         <container className="gamesContainer">
           <ul className="savedGames">
