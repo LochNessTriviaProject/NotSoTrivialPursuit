@@ -9,6 +9,7 @@ import SavedGames from "./SavedGames";
 import shapes from "../assets/shapes.png";
 import Swal from "sweetalert2";
 import "sweetalert2/src/sweetalert2.scss";
+import spiral from "../assets/spiral.png";
 
 function App() {
   //PSEUDO CODE
@@ -149,8 +150,8 @@ function App() {
     // displayTrivia
 
     //ERROR HANDLING FOR USER RE-CLICKING ON SUBMIT
-    
-    
+
+
     dbRef.push(quizArray);
 
     // setTimeout(function () {
@@ -227,7 +228,7 @@ function App() {
 
     if (quizCount === 9) {
       // savedDbRef.remove();
-      
+
       alert("yay u finished quiz!");
     } else {
       const data = {
@@ -344,7 +345,15 @@ function App() {
 
           <SavedGames userData={userData} resumeGame={resumeGame} />
         </div>
-        <img src={shapes} alt="" className="shapes" />
+
+        <img src={shapes} alt="" className="shapes" aria-hidden="true" />
+        <img src={spiral} alt="" className="spiral spiralOne" aria-hidden="true" />
+        <img src={spiral} alt="" className="spiral spiralTwo" aria-hidden="true" />
+        <img src={spiral} alt="" className="spiral spiralThree" aria-hidden="true" />
+        <img src={spiral} alt="" className="spiral spiralFour" aria-hidden="true" />
+        <img src={spiral} alt="" className="spiral spiralFive" aria-hidden="true" />
+        <img src={spiral} alt="" className="spiral spiralSix" aria-hidden="true" />
+
       </main>
 
       <Footer />
