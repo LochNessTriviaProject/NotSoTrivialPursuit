@@ -6,7 +6,9 @@ import Trivia from "./Trivia";
 import Footer from "./Footer";
 import Form from "./Form";
 import SavedGames from "./SavedGames";
-import shapes from "../assets/shapes.png"; 
+import shapes from "../assets/shapes.png";
+import Swal from "sweetalert2";
+import "sweetalert2/src/sweetalert2.scss";
 
 function App() {
   //PSEUDO CODE
@@ -21,7 +23,7 @@ function App() {
 
   const [savedGame, setSavedGame] = useState(false);
   const [userName, setUserName] = useState("");
-  const [savedQuizArray, setSavedQuizArray] = useState([1,2,3]);
+  const [savedQuizArray, setSavedQuizArray] = useState([1, 2, 3]);
 
   // const [quizOptions, setQuizOptions] = useState ([]);
   const [quizArray, setQuizArray] = useState([1, 2, 3]);
@@ -58,7 +60,7 @@ function App() {
         console.log(quizObjArray);
         // let re = /(&quot;)|(&#039;)/gi;
         // const doubleQuote = `"`;
-        
+
         const newQuizArray = res.data.results.map((quiz, index) => {
           console.log(res.data.results.length);
           return {
@@ -74,13 +76,13 @@ function App() {
               res.data.results[index].incorrect_answers[0]
             ),
             wrongAnswer2: unicodeReplacer(
-              res.data.results[index].incorrect_answers[1]),
+              res.data.results[index].incorrect_answers[1]
+            ),
             wrongAnswer3: unicodeReplacer(
-              res.data.results[index].incorrect_answers[2]),
+              res.data.results[index].incorrect_answers[2]
+            ),
           };
         });
-
-        
 
         // newQuizArray.map((quiz)=> {
         //   console.log(quiz);
@@ -93,15 +95,12 @@ function App() {
         //   )
         // })
 
-
-
         console.log(newQuizArray);
         // newQuizArray.push("progress");
         // newQuizArray.push("score");
         console.log(newQuizArray);
         newQuizArray.progress = 0;
         newQuizArray.score = 0;
-        
 
         setQuizArray(newQuizArray);
 
@@ -126,7 +125,14 @@ function App() {
           console.log(userData);
         });
       } else {
-        alert("no dice pal");
+        Swal.fire({
+          title: "Uh oh!",
+          text: "We don't have enough questions in that category to challenge you.",
+          imageUrl:
+            "https://images.blush.design/UMepYocbuMn1l5E92vl7?w=920&auto=compress&cs=srgb",
+          imageWidth: 300,
+          imageAlt: "Custom image",
+        });
       }
     });
 
@@ -136,8 +142,8 @@ function App() {
   }, [userName]);
 
   const unicodeReplacer = (string) => {
-    return string.replace(/&quot;/g, `"`).replace(/&#039;/g, `'`)
-  }
+    return string.replace(/&quot;/g, `"`).replace(/&#039;/g, `'`);
+  };
 
   const handleCategory = (event) => {
     // console.log(event.target.value);
@@ -183,7 +189,7 @@ function App() {
         //SHOW CORRECT ANIMATION HERE?
         setQuizScore(quizScore + 1);
         setQuizCount(quizCount + 1);
-        
+
         endGame(userSavedName);
       } else {
         //SHOW INCORRECT ANIMATION HERE?
@@ -210,14 +216,13 @@ function App() {
     dbRef.on("value", (res) => {
       const newDataArray = [];
       const data = res.val();
-      
+
       for (let key in data) {
-        
         const counter = Object.keys(data[key]).length;
         console.log(counter);
         // console.log("data", data);
         // console.log("key is here", key);
-        for (let i = 0; i < (counter-2); i++) {
+        for (let i = 0; i < counter - 2; i++) {
           // console.log(data[key]);
           let searchObj = {
             key: key,
@@ -230,55 +235,43 @@ function App() {
             wrongAnswer2: data[key][i].wrongAnswer2,
             wrongAnswer3: data[key][i].wrongAnswer3,
           };
-          
+
           // console.log("key", key);
           // console.log(searchObj);
           // console.log(data[key][i]);
           newDataArray.unshift(searchObj);
         }
-
       }
 
-
-
       updatedArray = newDataArray.filter((user) => {
-
         return user.name == savedUserName;
       });
 
       console.log(updatedArray);
-
     });
-        console.log(updatedArray);
-        // console.log(updatedArray.key);
-        
-        
-        const savedDbRef = firebase.database().ref(updatedArray[0].key);
-        
-        
-        
-        // console.log(savedDbRef);
-        // console.log(savedDbRef[0]);
-        
-        
-        
-        const data = {
-          progress: quizCount,
-          score: quizScore,
-        };
+    console.log(updatedArray);
+    // console.log(updatedArray.key);
 
-        savedDbRef.update(data);
-        //BECAUSE OF THIS and OBJECT.KEY -2, we only will get 8 questions when user forcefully exits our game!
-        setResumeData(updatedArray);
-        setQuizScore(0);
-        
+    const savedDbRef = firebase.database().ref(updatedArray[0].key);
+
+    // console.log(savedDbRef);
+    // console.log(savedDbRef[0]);
+
+    const data = {
+      progress: quizCount,
+      score: quizScore,
+    };
+
+    savedDbRef.update(data);
+    //BECAUSE OF THIS and OBJECT.KEY -2, we only will get 8 questions when user forcefully exits our game!
+    setResumeData(updatedArray);
+    setQuizScore(0);
 
     // After hiding modal, update the progress (quizCount)!
     // dbRef.push()? dbRef.update()?
 
     //savedQuizArray[0].key KEY
-    
-    
+
     // savedDbRef.on('value', (res)=>{
     //   const data = res.val();
     //   console.log(data);
@@ -295,39 +288,38 @@ function App() {
   };
 
   const resumeGame = (savedUserName) => {
-
     dbRef.on("value", (res) => {
       const newDataArray = [];
       const data = res.val();
       console.log("data", data);
 
-              for (let key in data) {
-                console.log(data[key]);
-                console.log(Object.keys(data[key]));
-                console.log(Object.keys(data[key]).length-2);
-                console.log(data[key][0]);
+      for (let key in data) {
+        console.log(data[key]);
+        console.log(Object.keys(data[key]));
+        console.log(Object.keys(data[key]).length - 2);
+        console.log(data[key][0]);
 
-                  for (let i=0; i<Object.keys(data[key]).length-2;i++){
-                    let searchObj = {
-                      key: key,
-                      name: data[key][i].name,
-                      progress: data[key][i].progress,
-                      question: data[key][i].question,
-                      correctAnswer: data[key][i].correctAnswer,
-                      wrongAnswer1: data[key][i].wrongAnswer1,
-                      wrongAnswer2: data[key][i].wrongAnswer2,
-                      wrongAnswer3: data[key][i].wrongAnswer3,
-                    };
+        for (let i = 0; i < Object.keys(data[key]).length - 2; i++) {
+          let searchObj = {
+            key: key,
+            name: data[key][i].name,
+            progress: data[key][i].progress,
+            question: data[key][i].question,
+            correctAnswer: data[key][i].correctAnswer,
+            wrongAnswer1: data[key][i].wrongAnswer1,
+            wrongAnswer2: data[key][i].wrongAnswer2,
+            wrongAnswer3: data[key][i].wrongAnswer3,
+          };
 
-                    // console.log(data[key]);
-                    // console.log("key", key);
-                    // console.log(searchObj);
-                    // console.log(data[key][i]);
-                    newDataArray.unshift(searchObj);
-                  }
-                console.log(newDataArray);
-              }
-              console.log("newdataArray", newDataArray);
+          // console.log(data[key]);
+          // console.log("key", key);
+          // console.log(searchObj);
+          // console.log(data[key][i]);
+          newDataArray.unshift(searchObj);
+        }
+        console.log(newDataArray);
+      }
+      console.log("newdataArray", newDataArray);
 
       const updatedArray = newDataArray.filter((user) => {
         console.log(user);
@@ -341,39 +333,39 @@ function App() {
       setSavedGame(true);
     });
 
-     setDisplayTrivia(true);
+    setDisplayTrivia(true);
   };
   return (
     <>
       <header>
         <div className="wrapper">
-          <h1><span className="notSo">Not So</span> <span className="trivial">Trivial</span> <span className="pursuit">Pursuit</span></h1>
+          <h1>
+            <span className="notSo">Not So</span>{" "}
+            <span className="trivial">Trivial</span>{" "}
+            <span className="pursuit">Pursuit</span>
+          </h1>
         </div>
         {/* <p>TEST: {userName}</p> */}
       </header>
 
       <main>
         <div className="wrapper">
-
-          {
-            savedGame ? (
+          {savedGame ? (
             displayTrivia ? (
-            <Trivia
-              quizArray={savedQuizArray}
-              quizCount={quizCount}
-              handleAnswerChoice={handleAnswerChoice}
-              quizScore={quizScore}
-              endGame={endGame}
-              //if else statement to show saved games instead of fresh api called games!
-              savedQuizArray={savedQuizArray}
-              savedGame={savedGame}
-            />
-          ) : (
-            <div aria-hidden="true"></div>
-          )
+              <Trivia
+                quizArray={savedQuizArray}
+                quizCount={quizCount}
+                handleAnswerChoice={handleAnswerChoice}
+                quizScore={quizScore}
+                endGame={endGame}
+                //if else statement to show saved games instead of fresh api called games!
+                savedQuizArray={savedQuizArray}
+                savedGame={savedGame}
+              />
             ) : (
-
-              displayTrivia ? (
+              <div aria-hidden="true"></div>
+            )
+          ) : displayTrivia ? (
             <Trivia
               quizArray={quizArray}
               quizCount={quizCount}
@@ -384,27 +376,22 @@ function App() {
               savedQuizArray={savedQuizArray}
               savedGame={savedGame}
             />
+          ) : (
+            <div aria-hidden="true"></div>
+          )}
 
-        ) : (
-          <div aria-hidden="true"></div>
-        )
-            )
-      }
-      
+          <Form
+            handleUserName={handleUserName}
+            handleCategory={handleCategory}
+            handleAmount={handleAmount}
+            handleDifficulty={handleDifficulty}
+            handleSubmit={handleSubmit}
+            userName={userName}
+          />
 
-        <Form
-          handleUserName={handleUserName}
-          handleCategory={handleCategory}
-          handleAmount={handleAmount}
-          handleDifficulty={handleDifficulty}
-          handleSubmit={handleSubmit}
-          userName={userName}
-        />
-
-        <SavedGames userData={userData} resumeGame={resumeGame} />
-
+          <SavedGames userData={userData} resumeGame={resumeGame} />
         </div>
-        <img src={shapes} alt="" className="shapes"/>
+        <img src={shapes} alt="" className="shapes" />
       </main>
 
       <Footer />
