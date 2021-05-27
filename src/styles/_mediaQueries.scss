@@ -135,6 +135,9 @@
     bottom: 36rem;
     right: 1rem;
   }
+  .triviaContent {
+    width: 90%;
+  }
   .exitButton {
     right: -13rem;
     bottom: 55rem;
@@ -178,8 +181,17 @@
 @media (max-width: 320px) {
   .modalContent {
     padding: 7rem 0 2rem;
+    .triviaContent {
+      font-size: 1.6rem;
+      width: 100%;
+      margin-top: 3.2rem;
+    }
+    .buttonsContainer {
+      margin-top: 0;
+    }
   }
   .exitButton {
-    right: -10.5rem;
+    right: -13.5rem;
+    bottom: 52rem;
   }
 }

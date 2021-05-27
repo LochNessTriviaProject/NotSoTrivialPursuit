@@ -633,6 +633,9 @@ footer {
     bottom: 36rem;
     right: 1rem;
   }
+  .triviaContent {
+    width: 90%;
+  }
   .exitButton {
     right: -13rem;
     bottom: 55rem;
@@ -677,7 +680,16 @@ footer {
   .modalContent {
     padding: 7rem 0 2rem;
   }
+  .modalContent .triviaContent {
+    font-size: 1.6rem;
+    width: 100%;
+    margin-top: 3.2rem;
+  }
+  .modalContent .buttonsContainer {
+    margin-top: 0;
+  }
   .exitButton {
-    right: -10.5rem;
+    right: -13.5rem;
+    bottom: 52rem;
   }
 }
