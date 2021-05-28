@@ -125,10 +125,8 @@ function App() {
         responseType: "json",
         params: searchParams
       }).then((res) => {
-        console.log(res);
         if (res.data.response_code === 0) {
           const quizObjArray = res.data.results;
-          console.log(quizObjArray);
 
           const newQuizArray = quizObjArray.map((quiz, index) => {
             return {
