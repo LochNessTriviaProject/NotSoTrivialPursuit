@@ -6,17 +6,16 @@ import Trivia from "./Trivia";
 import Footer from "./Footer";
 import Form from "./Form";
 import SavedGames from "./SavedGames";
-import shapes from "../assets/shapes.png";
 import Swal from "sweetalert2";
 import "sweetalert2/src/sweetalert2.scss";
-import spiral from "../assets/spiral.png";
 import Header from "./Header";
+import Spirals from "./Spirals";
 
 function App() {
   const [displayTrivia, setDisplayTrivia] = useState(false);
   const [quizAmount, setQuizAmount] = useState(10);
   const [quizCategory, setQuizCategory] = useState(14);
-  const [quizDifficulty, setQuizDifficulty] = useState("hard");
+  const [quizDifficulty, setQuizDifficulty] = useState("easy");
   const quizType = "multiple";
   const [savedGame, setSavedGame] = useState(false);
   const [savedQuizArray, setSavedQuizArray] = useState([1, 2, 3]);
@@ -110,19 +109,26 @@ function App() {
         imageAlt: "Custom image",
       });
     } else {
+
+      const searchParams = {
+        amount: quizAmount,
+        category: quizCategory,
+        type: quizType}
+
+      if (quizDifficulty !== "any") {
+        searchParams.difficulty = quizDifficulty;
+      }
+
       axios({
         method: "GET",
         url: "https://opentdb.com/api.php",
         responseType: "json",
-        params: {
-          amount: quizAmount,
-          category: quizCategory,
-          difficulty: quizDifficulty,
-          type: quizType,
-        },
+        params: searchParams
       }).then((res) => {
+        console.log(res);
         if (res.data.response_code === 0) {
           const quizObjArray = res.data.results;
+          console.log(quizObjArray);
 
           const newQuizArray = quizObjArray.map((quiz, index) => {
             return {
@@ -238,6 +244,13 @@ function App() {
     }
     setDisplayTrivia(false);
     setQuizScore(0);
+    setQuizArray([1,2,3]);
+    setSavedQuizArray([1,2,3]);
+    setQuizCount(0);
+
+
+
+
   };
 
   const resumeGame = (savedUserKey) => {
@@ -280,10 +293,9 @@ function App() {
 
       <main>
         <div className="wrapper">
-          {savedGame ? (
-            displayTrivia ? (
+          {displayTrivia ? (
               <Trivia
-                quizArray={savedQuizArray}
+                quizArray={savedGame ? savedQuizArray : quizArray}
                 quizCount={quizCount}
                 handleAnswerChoice={handleAnswerChoice}
                 quizScore={quizScore}
@@ -292,17 +304,7 @@ function App() {
             ) : (
               <div aria-hidden="true"></div>
             )
-          ) : displayTrivia ? (
-            <Trivia
-              quizArray={quizArray}
-              quizCount={quizCount}
-              handleAnswerChoice={handleAnswerChoice}
-              quizScore={quizScore}
-              endGame={endGame}
-            />
-          ) : (
-            <div aria-hidden="true"></div>
-          )}
+          }
 
           <Form
             handleCategory={handleCategory}
@@ -314,43 +316,7 @@ function App() {
           <SavedGames userData={userData} resumeGame={resumeGame} />
         </div>
 
-        <img src={shapes} alt="" className="shapes" aria-hidden="true" />
-        <img
-          src={spiral}
-          alt=""
-          className="spiral spiralOne"
-          aria-hidden="true"
-        />
-        <img
-          src={spiral}
-          alt=""
-          className="spiral spiralTwo"
-          aria-hidden="true"
-        />
-        <img
-          src={spiral}
-          alt=""
-          className="spiral spiralThree"
-          aria-hidden="true"
-        />
-        <img
-          src={spiral}
-          alt=""
-          className="spiral spiralFour"
-          aria-hidden="true"
-        />
-        <img
-          src={spiral}
-          alt=""
-          className="spiral spiralFive"
-          aria-hidden="true"
-        />
-        <img
-          src={spiral}
-          alt=""
-          className="spiral spiralSix"
-          aria-hidden="true"
-        />
+        <Spirals/>
       </main>
 
       <Footer />
