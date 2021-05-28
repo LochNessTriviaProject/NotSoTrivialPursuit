@@ -6,11 +6,10 @@ import Trivia from "./Trivia";
 import Footer from "./Footer";
 import Form from "./Form";
 import SavedGames from "./SavedGames";
-import shapes from "../assets/shapes.png";
 import Swal from "sweetalert2";
 import "sweetalert2/src/sweetalert2.scss";
-import spiral from "../assets/spiral.png";
 import Header from "./Header";
+import Spirals from "./Spirals";
 
 function App() {
   const [displayTrivia, setDisplayTrivia] = useState(false);
@@ -116,13 +115,9 @@ function App() {
         category: quizCategory,
         type: quizType}
 
-      if (quizDifficulty === "any") {
-        console.log("nothing");
-      }
-      else {
+      if (quizDifficulty !== "any") {
         searchParams.difficulty = quizDifficulty;
       }
-      console.log(searchParams);
 
       axios({
         method: "GET",
@@ -298,10 +293,9 @@ function App() {
 
       <main>
         <div className="wrapper">
-          {savedGame ? (
-            displayTrivia ? (
+          {displayTrivia ? (
               <Trivia
-                quizArray={savedQuizArray}
+                quizArray={savedGame ? savedQuizArray : quizArray}
                 quizCount={quizCount}
                 handleAnswerChoice={handleAnswerChoice}
                 quizScore={quizScore}
@@ -310,17 +304,7 @@ function App() {
             ) : (
               <div aria-hidden="true"></div>
             )
-          ) : displayTrivia ? (
-            <Trivia
-              quizArray={quizArray}
-              quizCount={quizCount}
-              handleAnswerChoice={handleAnswerChoice}
-              quizScore={quizScore}
-              endGame={endGame}
-            />
-          ) : (
-            <div aria-hidden="true"></div>
-          )}
+          }
 
           <Form
             handleCategory={handleCategory}
@@ -332,43 +316,7 @@ function App() {
           <SavedGames userData={userData} resumeGame={resumeGame} />
         </div>
 
-        <img src={shapes} alt="" className="shapes" aria-hidden="true" />
-        <img
-          src={spiral}
-          alt=""
-          className="spiral spiralOne"
-          aria-hidden="true"
-        />
-        <img
-          src={spiral}
-          alt=""
-          className="spiral spiralTwo"
-          aria-hidden="true"
-        />
-        <img
-          src={spiral}
-          alt=""
-          className="spiral spiralThree"
-          aria-hidden="true"
-        />
-        <img
-          src={spiral}
-          alt=""
-          className="spiral spiralFour"
-          aria-hidden="true"
-        />
-        <img
-          src={spiral}
-          alt=""
-          className="spiral spiralFive"
-          aria-hidden="true"
-        />
-        <img
-          src={spiral}
-          alt=""
-          className="spiral spiralSix"
-          aria-hidden="true"
-        />
+        <Spirals/>
       </main>
 
       <Footer />
