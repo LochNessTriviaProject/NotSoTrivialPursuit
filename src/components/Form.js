@@ -68,6 +68,7 @@ const Form = ({
               id="quizDifficulty"
               onChange={handleDifficulty}
             >
+              <option value="any">Any Difficulty</option>
               <option value="easy">Easy</option>
               <option value="medium">Medium</option>
               <option value="hard">Hard</option>
