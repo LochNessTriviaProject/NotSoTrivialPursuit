@@ -246,9 +246,6 @@ function App() {
     setSavedQuizArray([1,2,3]);
     setQuizCount(0);
 
-
-
-
   };
 
   const resumeGame = (savedUserKey) => {

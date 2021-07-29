@@ -2,45 +2,27 @@ import shapes from "../assets/shapes.png";
 import spiral from "../assets/spiral.png";
 
 const Spirals = () => {
+
+
+
+  const spiralArray = [];
+
+  for (let i=1; i<7; i++){
+    spiralArray.push(        
+    <img
+      src={spiral}
+      alt=""
+      className={`spiral spiral${i}`}
+      aria-hidden="true"
+    />
+    )
+  }
+
+
     return(
         <>
         <img src={shapes} alt="" className="shapes" aria-hidden="true" />
-        <img
-          src={spiral}
-          alt=""
-          className="spiral spiralOne"
-          aria-hidden="true"
-        />
-        <img
-          src={spiral}
-          alt=""
-          className="spiral spiralTwo"
-          aria-hidden="true"
-        />
-        <img
-          src={spiral}
-          alt=""
-          className="spiral spiralThree"
-          aria-hidden="true"
-        />
-        <img
-          src={spiral}
-          alt=""
-          className="spiral spiralFour"
-          aria-hidden="true"
-        />
-        <img
-          src={spiral}
-          alt=""
-          className="spiral spiralFive"
-          aria-hidden="true"
-        />
-        <img
-          src={spiral}
-          alt=""
-          className="spiral spiralSix"
-          aria-hidden="true"
-        />
+        {spiralArray}
         </>
     )
 }
